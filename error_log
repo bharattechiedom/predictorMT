@@ -1,0 +1,1 @@
+[07-Mar-2026 06:29:28 UTC] PHP Fatal error:  Cannot redeclare App\Models\MaintenanceTask::$casts in /home2/predictormt/public_html/app/Models/MaintenanceTask.php on line 32

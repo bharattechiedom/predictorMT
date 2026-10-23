@@ -1,0 +1,211 @@
+@include('admin.include.header')
+
+
+<div class="col-md-9 col-lg-10 p-0">
+  <nav class="navbar navbar-expand-lg navbar-custom bg-black">
+
+                    <div class="container-fluid">
+
+                        <span class="navbar-brand mb-0 h1 text-white">
+                          Add Alert
+                        </span>
+
+                        <div class="navbar-nav ms-auto ">
+                          
+        
+      
+    <a href="{{ route('admin.alerts.index') }}" class="btn themeBtn">Back</a>
+
+
+                        </div>
+
+                    </div>
+
+                </nav>
+
+
+
+<div class="main-content p-4">
+  <div class="card bg-white p-3 border-0">
+
+<div class="container py-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+
+    <h3 class="mb-0"></h3>
+
+
+  </div>
+
+
+
+  @if ($errors->any())
+
+    <div class="alert alert-danger">
+
+      <ul class="mb-0">
+
+        @foreach ($errors->all() as $error)
+
+          <li>{{ $error }}</li>
+
+        @endforeach
+
+      </ul>
+
+    </div>
+
+  @endif
+
+
+
+  <form method="POST" action="{{ route('admin.alerts.store') }}" class="bg-white p-3 border rounded">
+
+    @csrf
+
+    <div class="row g-3">
+
+      <div class="col-md-6">
+
+        <label class="form-label">Company</label>
+
+        <select name="company_id" class="form-select" required>
+
+          @foreach($companies as $company)
+
+            <option value="{{ $company->id }}">{{ $company->name }}</option>
+
+          @endforeach
+
+        </select>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <label class="form-label">Machine</label>
+
+        <select name="machine_id" class="form-select" required>
+
+          @foreach($machines as $machine)
+
+            <option value="{{ $machine->id }}">{{ $machine->name }}</option>
+
+          @endforeach
+
+        </select>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <label class="form-label">Sensor (optional)</label>
+
+        <select name="sensor_id" class="form-select">
+
+          <option value="">None</option>
+
+          @foreach($sensors as $sensor)
+
+            <option value="{{ $sensor->id }}">{{ $sensor->device_id }}</option>
+
+          @endforeach
+
+        </select>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <label class="form-label">Level</label>
+
+        <select name="level" class="form-select" required>
+
+          @foreach(['info','warning','critical'] as $level)
+
+            <option value="{{ $level }}">{{ $level }}</option>
+
+          @endforeach
+
+        </select>
+
+      </div>
+
+      <div class="col-12">
+
+        <label class="form-label">Message</label>
+
+        <input type="text" name="message" class="form-control" maxlength="500" required>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <label class="form-label">Origin</label>
+
+        <select name="origin" class="form-select" required>
+
+          @foreach(['rule','prediction','manual','sensor'] as $origin)
+
+            <option value="{{ $origin }}">{{ $origin }}</option>
+
+          @endforeach
+
+        </select>
+
+      </div>
+
+      <div class="col-12">
+
+        <label class="form-label">Payload (JSON)</label>
+
+        <textarea name="payload" class="form-control" rows="3" placeholder='{"threshold":90}'></textarea>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <label class="form-label">Acknowledged By</label>
+
+        <select name="acknowledged_by" class="form-select">
+
+          <option value="">None</option>
+
+          @foreach($users as $user)
+
+            <option value="{{ $user->id }}">{{ $user->name }}</option>
+
+          @endforeach
+
+        </select>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <label class="form-label">Acknowledged At</label>
+
+        <input type="datetime-local" name="acknowledged_at" class="form-control">
+
+      </div>
+
+    </div>
+
+    <div class="mt-3">
+
+      <button type="submit" class="btn btn-primary">Create</button>
+
+    </div>
+
+  </form>
+
+</div>
+
+
+
+@include('admin.include.footer')
+
+
+
+
+

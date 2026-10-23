@@ -1,0 +1,307 @@
+@media (max-width: 1280.5px) {.invdi_sect .box_plan{padding: 35px 40px;}}
+
+
+
+
+
+@media (max-width: 990.5px) {
+
+    .zoom_video_sect .video_lg,.zoom_video_sect .video_chat{width: 50%;flex: 0 0 50%;}
+
+    .Mapping_sect img{width: 100%;}
+
+    .grap_list_admin{grid-template-columns: auto;}
+
+    .box_card_rgt .prof_list .card_bx{display: block;}
+
+    .box_card_rgt .prof_list .card_bx .img_bx img{width: 100%;height: 100%;}
+
+    .sidebar-icon-only .sidebar{    top: 72px;}
+
+    .body_thnks .box.succ_box{width: auto;padding: 0 15px;}
+
+    .land_home .banner_sect{display: none;}
+
+    .linetcare_line img {
+
+        width: 100%;
+
+    }.box_card_rgt .prof_list .card_bx .img_bx{margin-bottom: 30px;}
+
+    .main-panel{padding: 10px;}
+
+    .box_card_rgt .prof_list .card_bx .cont_bx{margin: 0;}
+
+    .plan__navbar{    grid-template-columns:repeat(1,1fr);}
+
+    .Testimonials_sect .Testim_rgt{margin: 0px;}
+
+    .Testimonials_sect {
+
+        padding: 20px 0;
+
+    }.body_thnks .box{width: auto;}
+
+    .navbar-collapse {
+
+              background: #fff;
+        z-index: 999;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 74px;
+
+    }.bg_inner_mark:before{display: none;}
+
+    .dasp_grap>ul{    grid-template-columns: repeat(3,1fr);}
+
+    .navbar-collapse .nav-link:hover {
+
+    }
+
+    .plan__navbar .pln_mode p{margin-top: 0;}
+
+    .plan__navbar{margin-top: 15px;}
+
+    header.header_top.top-fixed .btnLogin {
+
+        display: block;
+        min-width: auto;
+        padding: 10px 5px;
+        font-size: 12px;
+        height: auto;
+
+    }.plan__navbar .plan_tab ul{grid-template-columns: 1fr;}
+
+    .plan__navbar .plan_tab ul li{margin-bottom: 40px;}
+
+    
+
+    .header_top .btn_join {
+        padding: 10px 5px;
+        display: block;
+        width: max-content;
+        min-width: auto;
+        font-size: 12px;
+
+    }
+
+    
+
+    header.header_top {
+
+        z-index: 6;
+
+        background: #FFFFFF;
+
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+
+    }
+
+    
+
+    .navbar-toggler {
+
+        border: 0;
+        color: #51ade5 !important;
+        right: 0;
+        position: absolute;
+    }
+
+    
+
+    .navbar-toggler-icon {
+
+        filter: unset;
+
+    }
+
+    
+
+    .navbar-toggler:focus {
+
+        outline: none;
+
+        box-shadow: none;
+
+        border: 0;
+
+    }
+
+    
+
+    .header_top .navbar-expand-lg .navbar-nav .nav-link {
+
+        padding: 10px 15px;
+
+        padding-left: 0;
+
+    }
+
+    
+
+    .header_top .btnLogin {
+
+        color: #607688;
+
+        padding: 10px 0;
+
+        font-size:13px;
+
+    }
+
+    ul.navbar-nav {
+
+    padding-left: 13px;
+
+}
+
+      .btn_grp {
+
+        /* display: flex;
+
+        flex-direction: column; */
+
+        /*width: 100%;  Parent takes full width */
+
+        /*gap: 0px;  Adds some space between the buttons */
+        /* padding: 0 0 20px; */
+        
+
+    }
+
+    .btn_grp button {
+
+        width: 100%; /* Buttons take 100% width of the parent */
+
+    }
+
+    .btn_grp button a {
+
+        width: 100%; 
+
+       
+
+    }
+
+}
+
+
+
+@media only screen and (max-width: 600px) {
+
+    .testi_home .owl-carousel .owl-dots {
+
+        bottom: -100px;
+
+        left: 50%;
+
+    }
+
+    .post_desig{
+
+        position: relative;
+        text-align: right;
+
+    }
+    section.services-section {
+    padding: 20px;
+}
+.img-left{
+    left: 0;
+}
+
+
+    .testi_home .owl-stage-outer .post_desig{
+        background-size: 30px;
+        padding-right: 40px;
+    }
+
+    header.header_top{
+        top:0
+    }
+     .btn_grp {
+
+        margin-right: 40px;
+
+    }
+    .header_top a.btnLogin{
+        padding: 10px 5px;
+        font-size: 12px;
+        min-width: auto;
+    }
+    .iot-section-p{
+        width: auto;
+        font-size: 15px;
+    }
+
+    .headr{
+        padding: 3px 10px;
+    }
+    section.banner-video{
+        margin-top: 75px;
+    }
+    section#solutions {
+    padding-top: 0 !important;
+}
+
+
+  p {
+    font-size: 15px;
+  
+  }
+  .choose-m {
+    padding: 20px 15px;
+    margin-top: 20px;
+    height: auto;
+  }
+
+  .choose-m p{
+    font-size: 16px;
+    padding:5px 0 0;
+  }
+  .testi_slider .owl-carousel .owl-item .post-thumb{
+    padding: 0;
+  }
+  ul.text-white.pt-4 li{
+    font-size: 16px;
+    padding: 5px 0;
+  }
+  .signin-img {
+    display: none;
+}
+.footer-logo {
+    text-align: center;
+}
+.footer-logo img{
+    margin: 0 auto;
+    height: 100px;
+}
+.footer-social-icon ul li p, .footer-social-icon ul li a {
+    font-size: 13px;
+}
+.ratig-2-footer,
+.client-rating p {
+    font-size: 13px;
+    width: auto;
+}
+.footer-links h5{
+    font-size: 18px;
+}
+#backToTop svg {
+    width: 35px;
+    height: 35px;
+}
+footer .row.g-5 {
+    --bs-gutter-y: 10px !important;
+}
+.condition-div{
+    padding: 75px 0 0px;
+}
+.formRow{
+    padding: 20px;
+}
+}
+
+
