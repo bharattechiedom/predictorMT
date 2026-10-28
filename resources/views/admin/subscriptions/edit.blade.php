@@ -1,139 +1,226 @@
+
 @include('admin.include.header')
 
+<main class="admin-page-content">
+    <div class="container-fluid admin-layout">
+        <div class="row">
+            @include('admin.include.sidebar-nav')
 
-<div class="col-md-9 col-lg-10 p-0">
-  <nav class="navbar navbar-expand-lg navbar-custom bg-black">
-      <div class="container-fluid">
-          <span class="navbar-brand mb-0 h1 text-white">
-            Edit Subscription
-          </span>
-          <div class="navbar-nav ms-auto ">
-            <a href="{{ route('admin.subscriptions.index') }}" class="btn themeBtn ms-2">Back</a>
-          </div>
-      </div>
-  </nav>
-<div class="main-content p-4">
-  <div class="card bg-white p-3 border-0">
+            <div class="col-12 col-md-9 col-lg-10 dashboard-wrapper">
+                <div class="main-content p-3 p-md-4">
 
-  @if ($errors->any())
+                    {{-- Page Header --}}
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                        <div>
+                            <h4 class="fw-bold mb-1">Edit Subscription</h4>
+                            <p class="text-muted mb-0">
+                                Update the company subscription and plan details.
+                            </p>
+                        </div>
 
-    <div class="alert alert-danger">
+                        <a href="{{ route('admin.subscriptions.index') }}"
+                           class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Subscriptions
+                        </a>
+                    </div>
 
-      <ul class="mb-0">
+                    {{-- Validation Errors --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <div class="fw-semibold mb-2">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                Please fix the following errors:
+                            </div>
 
-        @foreach ($errors->all() as $error)
+                            <ul class="mb-0 ps-4">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
 
-          <li>{{ $error }}</li>
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                        </div>
+                    @endif
 
-        @endforeach
+                    <div class="card border-0 shadow-sm rounded-4">
 
-      </ul>
+                        {{-- Card Header --}}
+                        <div class="card-header bg-white border-0 p-4">
+                            <h5 class="fw-bold mb-1">
+                                <i class="fas fa-edit text-primary me-2"></i>
+                                Subscription Information
+                            </h5>
+                            <p class="text-muted small mb-0">
+                                Modify the details below and save your changes.
+                            </p>
+                        </div>
 
+                        <div class="card-body p-4 border-top">
+                            <form method="POST"
+                                  action="{{ route('admin.subscriptions.update', $subscription) }}">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="row g-4">
+
+                                    {{-- Company --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="company_id" class="form-label fw-semibold">
+                                            Company <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select name="company_id"
+                                                id="company_id"
+                                                class="form-select @error('company_id') is-invalid @enderror"
+                                                required>
+                                            <option value="">Select Company</option>
+
+                                            @foreach($companies as $company)
+                                                <option value="{{ $company->id }}"
+                                                    {{ old('company_id', $subscription->company_id) == $company->id ? 'selected' : '' }}>
+                                                    {{ $company->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('company_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    {{-- Plan --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="plan_id" class="form-label fw-semibold">
+                                            Plan <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select name="plan_id"
+                                                id="plan_id"
+                                                class="form-select @error('plan_id') is-invalid @enderror"
+                                                required>
+                                            <option value="">Select Plan</option>
+
+                                            @foreach($plans as $plan)
+                                                <option value="{{ $plan->id }}"
+                                                    {{ old('plan_id', $subscription->plan_id) == $plan->id ? 'selected' : '' }}>
+                                                    {{ $plan->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('plan_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    {{-- Status --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="status" class="form-label fw-semibold">
+                                            Status <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select name="status"
+                                                id="status"
+                                                class="form-select @error('status') is-invalid @enderror"
+                                                required>
+                                            <option value="">Select Status</option>
+
+                                            @foreach(['active', 'trialing', 'past_due', 'cancelled'] as $status)
+                                                <option value="{{ $status }}"
+                                                    {{ old('status', $subscription->status) === $status ? 'selected' : '' }}>
+                                                    {{ ucwords(str_replace('_', ' ', $status)) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('status')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    {{-- Started At --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="started_at" class="form-label fw-semibold">
+                                            Started At <span class="text-danger">*</span>
+                                        </label>
+
+                                        <input type="datetime-local"
+                                               name="started_at"
+                                               id="started_at"
+                                               value="{{ old('started_at', optional($subscription->started_at)->format('Y-m-d\TH:i')) }}"
+                                               class="form-control @error('started_at') is-invalid @enderror"
+                                               required>
+
+                                        @error('started_at')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    {{-- Ended At --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="ended_at" class="form-label fw-semibold">
+                                            Ended At
+                                        </label>
+
+                                        <input type="datetime-local"
+                                               name="ended_at"
+                                               id="ended_at"
+                                               value="{{ old('ended_at', optional($subscription->ended_at)->format('Y-m-d\TH:i')) }}"
+                                               class="form-control @error('ended_at') is-invalid @enderror">
+
+                                        @error('ended_at')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+
+                                        <small class="text-muted">
+                                            Optional. Leave blank if no end date is set.
+                                        </small>
+                                    </div>
+
+                                    {{-- External Subscription ID --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="external_subscription_id"
+                                               class="form-label fw-semibold">
+                                            External Subscription ID
+                                        </label>
+
+                                        <input type="text"
+                                               name="external_subscription_id"
+                                               id="external_subscription_id"
+                                               value="{{ old('external_subscription_id', $subscription->external_subscription_id) }}"
+                                               class="form-control @error('external_subscription_id') is-invalid @enderror"
+                                               placeholder="Enter external subscription ID">
+
+                                        @error('external_subscription_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+                                {{-- Form Actions --}}
+                                <div class="border-top mt-4 pt-4 d-flex flex-wrap gap-2">
+                                    <button type="submit" class="btn theme-btn">
+                                        <i class="fas fa-save me-2"></i>Update Subscription
+                                    </button>
+
+                                    <a href="{{ route('admin.subscriptions.index') }}"
+                                       class="btn btn-dark fs-14">
+                                        Cancel
+                                    </a>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
-
-  @endif
-
-
-
-  <form method="POST" action="{{ route('admin.subscriptions.update', $subscription) }}" class="bg-white p-3 border-0 rounded">
-
-    @csrf
-
-    @method('PUT')
-
-    <div class="row g-3">
-
-      <div class="col-md-6">
-
-        <label class="form-label">Company</label>
-
-        <select name="company_id" class="form-select" required>
-
-          @foreach($companies as $company)
-
-            <option value="{{ $company->id }}" {{ $subscription->company_id==$company->id?'selected':'' }}>{{ $company->name }}</option>
-
-          @endforeach
-
-        </select>
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Plan</label>
-
-        <select name="plan_id" class="form-select" required>
-
-          @foreach($plans as $plan)
-
-            <option value="{{ $plan->id }}" {{ $subscription->plan_id==$plan->id?'selected':'' }}>{{ $plan->name }}</option>
-
-          @endforeach
-
-        </select>
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Status</label>
-
-        <select name="status" class="form-select" required>
-
-          @foreach(['active','trialing','past_due','cancelled'] as $status)
-
-            <option value="{{ $status }}" {{ $subscription->status === $status ? 'selected' : '' }}>{{ $status }}</option>
-
-          @endforeach
-
-        </select>
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Started At</label>
-
-        <input type="datetime-local" name="started_at" class="form-control" value="{{ optional($subscription->started_at)->format('Y-m-d\\TH:i') }}" required>
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Ended At</label>
-
-        <input type="datetime-local" name="ended_at" class="form-control" value="{{ optional($subscription->ended_at)->format('Y-m-d\\TH:i') }}">
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">External Subscription ID</label>
-
-        <input type="text" name="external_subscription_id" class="form-control" value="{{ $subscription->external_subscription_id }}">
-
-      </div>
-
-    </div>
-
-    <div class="mt-3">
-
-      <button type="submit" class="btn btn-primary">Update</button>
-
-    </div>
-
-  </form>
-
-</div>
-
-</div>
-
-
+</main>
 
 @include('admin.include.footer')
-
-
-
-
-

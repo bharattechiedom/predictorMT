@@ -193,7 +193,7 @@
 
     <div class="mt-3">
 
-      <button type="submit" class="btn btn-primary">Create</button>
+      <button type="submit" class="btn theme-btn">Create</button>
 
     </div>
 

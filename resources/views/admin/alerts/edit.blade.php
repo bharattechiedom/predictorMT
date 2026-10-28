@@ -186,7 +186,7 @@
 
     <div class="mt-3">
 
-      <button type="submit" class="btn btn-primary">Update</button>
+      <button type="submit" class="btn theme-btn">Update</button>
 
     </div>
 

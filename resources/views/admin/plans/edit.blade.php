@@ -1,127 +1,189 @@
 @include('admin.include.header')
 
+<main class="admin-page-content">
+    <div class="container-fluid admin-layout">
+        <div class="row">
 
+            @include('admin.include.sidebar-nav')
 
-<div class="col-md-9 col-lg-10 p-0">
+            <div class="col-12 col-md-9 col-lg-10 dashboard-wrapper">
 
-            <nav class="navbar navbar-expand-lg navbar-custom">
+                {{-- Edit Plan --}}
+                <div class="main-content p-4">
 
-                <div class="container-fluid">
+                    <div class="card border-0 shadow-sm rounded-4">
 
-                    <span class="navbar-brand mb-0 h1">Edit Plan</span>
+                        {{-- Header --}}
+                        <div class="card-header bg-white border-0 p-4 pb-0">
+                            <div class="d-flex align-items-center gap-3">
 
-                </div>
+                                <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-3">
+                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                </div>
 
-            </nav>
-
-
-
-            <div class="main-content p-4">
-
-                    <div class="card bg-white p-3 border-0">
-
-                    <div class="card-body">
-
-
-
-                        @if($errors->any())
-
-                            <div class="alert alert-danger">
-
-                                <ul class="mb-0">
-
-                                    @foreach($errors->all() as $error)
-
-                                        <li>{{ $error }}</li>
-
-                                    @endforeach
-
-                                </ul>
+                                <div>
+                                    <h4 class="mb-1 fw-bold">Edit Plan</h4>
+                                    <p class="text-muted small mb-0">
+                                        Update subscription plan pricing, machine limits, and features.
+                                    </p>
+                                </div>
 
                             </div>
+                        </div>
 
-                        @endif
+                        <div class="card-body p-4">
 
+                            {{-- Validation Errors --}}
+                            @if($errors->any())
+                                <div class="alert alert-danger border-0 rounded-3">
+                                    <div class="fw-semibold mb-2">
+                                        <i class="fa-solid fa-circle-exclamation me-2"></i>
+                                        Please fix the following errors:
+                                    </div>
 
+                                    <ul class="mb-0 ps-4">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
 
-                        <form action="{{ route('admin.plans.update', $plan) }}" method="POST">
+                            <form action="{{ route('admin.plans.update', $plan) }}" method="POST">
+                                @csrf
+                                @method('PUT')
 
-                            @csrf
+                                <div class="row g-4">
 
-                            @method('PUT')
+                                    {{-- Plan Name --}}
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">
+                                            <i class="fa-solid fa-tag text-primary me-2"></i>
+                                            Plan Name <span class="text-danger">*</span>
+                                        </label>
 
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            class="form-control"
+                                            placeholder="Enter plan name"
+                                            value="{{ old('name', $plan->name) }}"
+                                            required
+                                        >
+                                    </div>
 
+                                    {{-- Price --}}
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">
+                                            <i class="fa-solid fa-dollar-sign text-primary me-2"></i>
+                                            Price <span class="text-danger">*</span>
+                                        </label>
 
-                            <div class="mb-3">
+                                        <input
+                                            type="number"
+                                            step="0.01"
+                                            name="price"
+                                            class="form-control"
+                                            placeholder="Enter plan price"
+                                            value="{{ old('price', $plan->price) }}"
+                                            required
+                                        >
+                                    </div>
 
-                                <label class="form-label">Name</label>
+                                    {{-- Machines Included --}}
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">
+                                            <i class="fa-solid fa-gears text-primary me-2"></i>
+                                            Machines Included <span class="text-danger">*</span>
+                                        </label>
 
-                                <input type="text" name="name" class="form-control" value="{{ old('name', $plan->name) }}" required>
+                                        <input
+                                            type="number"
+                                            name="machines_included"
+                                            class="form-control"
+                                            placeholder="Enter number of machines"
+                                            value="{{ old('machines_included', $plan->machines_included) }}"
+                                            required
+                                        >
+                                    </div>
 
-                            </div>
+                                    {{-- Billing Interval --}}
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">
+                                            <i class="fa-solid fa-calendar-days text-primary me-2"></i>
+                                            Billing Interval
+                                        </label>
 
+                                        <input
+                                            type="text"
+                                            name="billing_interval"
+                                            class="form-control"
+                                            placeholder="e.g. per machine / month"
+                                            value="{{ old('billing_interval', $plan->billing_interval) }}"
+                                        >
 
+                                        <small class="text-muted">
+                                            Enter the billing interval label for this plan.
+                                        </small>
+                                    </div>
 
-                            <div class="mb-3">
+                                    {{-- Short Description --}}
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold">
+                                            <i class="fa-solid fa-align-left text-primary me-2"></i>
+                                            Short Description
+                                        </label>
 
-                                <label class="form-label">Price</label>
+                                        <textarea
+                                            name="description"
+                                            class="form-control"
+                                            rows="3"
+                                            placeholder="Enter a short description of the plan"
+                                        >{{ old('description', $plan->description) }}</textarea>
+                                    </div>
 
-                                <input type="number" step="0.01" name="price" class="form-control" value="{{ old('price', $plan->price) }}" required>
+                                    {{-- Features --}}
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold">
+                                            <i class="fa-solid fa-list-check text-primary me-2"></i>
+                                            Plan Features
+                                        </label>
 
-                            </div>
+                                        <textarea
+                                            name="features_text"
+                                            class="form-control"
+                                            rows="6"
+                                            placeholder="Enter one feature per line"
+                                        >{{ old('features_text', is_array($plan->features) ? implode("\n", $plan->features) : '') }}</textarea>
 
+                                        <small class="text-muted">
+                                            Add each feature on a separate line.
+                                        </small>
+                                    </div>
 
+                                </div>
 
-                            <div class="mb-3">
+                                {{-- Footer Actions --}}
+                                <div class="d-flex flex-wrap justify-content-end gap-2 border-top mt-4 pt-4">
 
-                                <label class="form-label">Machines Included</label>
+                                    <a
+                                        href="{{ route('admin.plans.index') }}"
+                                        class="btn btn-danger"
+                                    >
+                                        <i class="fa-solid fa-arrow-left"></i>
+                                        Cancel
+                                    </a>
 
-                                <input type="number" name="machines_included" class="form-control" value="{{ old('machines_included', $plan->machines_included) }}" required>
+                                    <button type="submit" class="btn theme-btn">
+                                        <i class="fa-solid fa-floppy-disk me-2"></i>
+                                        Update Plan
+                                    </button>
 
-                            </div>
+                                </div>
 
+                            </form>
 
-
-                            <div class="mb-3">
-
-                                <label class="form-label">Billing Interval (label)</label>
-
-                                <input type="text" name="billing_interval" class="form-control" value="{{ old('billing_interval', $plan->billing_interval) }}" placeholder="e.g. per machine / month">
-
-                            </div>
-
-
-
-                            <div class="mb-3">
-
-                                <label class="form-label">Short Description</label>
-
-                                <textarea name="description" class="form-control" rows="3">{{ old('description', $plan->description) }}</textarea>
-
-                            </div>
-
-
-
-                            <div class="mb-3">
-
-                                <label class="form-label">Features (one per line)</label>
-
-                                <textarea name="features_text" class="form-control" rows="6">{{ old('features_text', is_array($plan->features) ? implode("\n", $plan->features) : '') }}</textarea>
-
-                            </div>
-
-
-
-                            <div class="mt-3">
-
-                                <button class="btn btn-primary">Update Plan</button>
-
-                                <a href="{{ route('admin.plans.index') }}" class="btn btn-secondary">Cancel</a>
-
-                            </div>
-
-                        </form>
-
+                        </div>
                     </div>
 
                 </div>
@@ -129,8 +191,7 @@
             </div>
 
         </div>
-
-
+    </div>
+</main>
 
 @include('admin.include.footer')
-

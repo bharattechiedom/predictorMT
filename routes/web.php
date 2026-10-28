@@ -339,6 +339,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('invoices', \App\Http\Controllers\Admin\InvoiceController::class)->names('invoices');
 
         Route::resource('tickets', \App\Http\Controllers\Admin\TicketController::class)->names('tickets');
+        Route::resource('settings', \App\Http\Controllers\Admin\SettingController::class)->names('settings');
 
     });
 
@@ -348,13 +349,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 // Additional Resource Routes
 
-Route::resource('alerts', AlertController::class);
+// Route::resource('alerts', AlertController::class);
 
-Route::resource('billings', BillingController::class);
+// Route::resource('billings', BillingController::class);
 
-Route::resource('reports', ReportController::class);
+// Route::resource('reports', ReportController::class);
 
-Route::resource('supports', SupportController::class);
+// Route::resource('supports', SupportController::class);
 
-Route::resource('teams', TeamController::class);
+// Route::resource('teams', TeamController::class);
 

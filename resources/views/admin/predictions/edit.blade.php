@@ -1,178 +1,303 @@
 @include('admin.include.header')
 
+<main class="admin-page-content">
+    <div class="container-fluid admin-layout">
+        <div class="row">
+            @include('admin.include.sidebar-nav')
 
-<div class="col-md-9 col-lg-10 p-0">
-  <nav class="navbar navbar-expand-lg navbar-custom bg-black">
+            <div class="col-12 col-md-9 col-lg-10 dashboard-wrapper">
+                <div class="main-content p-3 p-md-4">
 
-                    <div class="container-fluid">
-
-                        <span class="navbar-brand mb-0 h1 text-white">
-                          Edit Prediction
-                        </span>
-
-                        <div class="navbar-nav ms-auto ">
-      <a href="{{ route('admin.predictions.index') }}" class="btn themeBtn">Back</a>
-
-
+                    {{-- Page Header --}}
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                        <div>
+                            <h4 class="fw-bold mb-1">
+                                <i class="fa-solid fa-pen-to-square text-primary me-2"></i>
+                                Edit Prediction
+                            </h4>
+                            <p class="text-muted mb-0">
+                                Update machine prediction details and status.
+                            </p>
                         </div>
 
+                        <a href="{{ route('admin.predictions.index') }}"
+                           class="btn btn-outline-secondary">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Back to Predictions
+                        </a>
                     </div>
 
-                </nav>
+                    {{-- Validation Errors --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <div class="fw-semibold mb-2">
+                                <i class="fa-solid fa-circle-exclamation me-2"></i>
+                                Please correct the following errors:
+                            </div>
 
+                            <ul class="mb-0 ps-4">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
 
+                            <button type="button" class="btn-close"
+                                    data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
 
-<div class="main-content p-4">
-  <div class="card bg-white p-3 border-0">
+                    {{-- Edit Prediction Form --}}
+                    <form method="POST"
+                          action="{{ route('admin.predictions.update', $prediction) }}">
+                        @csrf
+                        @method('PUT')
 
+                        {{-- Machine & Sensor --}}
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-0 p-3 p-md-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-3">
+                                        <i class="fa-solid fa-microchip fa-lg"></i>
+                                    </div>
 
+                                    <div>
+                                        <h5 class="fw-bold mb-1">Machine & Sensor</h5>
+                                        <p class="text-muted small mb-0">
+                                            Update the associated machine and sensor.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="card-body p-3 p-md-4">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="machine_id" class="form-label fw-semibold">
+                                            Machine <span class="text-danger">*</span>
+                                        </label>
 
-  @if ($errors->any())
+                                        <select name="machine_id" id="machine_id"
+                                                class="form-select @error('machine_id') is-invalid @enderror"
+                                                required>
+                                            <option value="">Select Machine</option>
 
-    <div class="alert alert-danger">
+                                            @foreach($machines as $machine)
+                                                <option value="{{ $machine->id }}"
+                                                    {{ old('machine_id', $prediction->machine_id) == $machine->id ? 'selected' : '' }}>
+                                                    {{ $machine->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
 
-      <ul class="mb-0">
+                                        @error('machine_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-        @foreach ($errors->all() as $error)
+                                    <div class="col-md-6">
+                                        <label for="sensor_id" class="form-label fw-semibold">
+                                            Sensor <span class="text-muted small">(Optional)</span>
+                                        </label>
 
-          <li>{{ $error }}</li>
+                                        <select name="sensor_id" id="sensor_id"
+                                                class="form-select @error('sensor_id') is-invalid @enderror">
+                                            <option value="">None</option>
 
-        @endforeach
+                                            @foreach($sensors as $sensor)
+                                                <option value="{{ $sensor->id }}"
+                                                    {{ old('sensor_id', $prediction->sensor_id) == $sensor->id ? 'selected' : '' }}>
+                                                    {{ $sensor->device_id }}
+                                                </option>
+                                            @endforeach
+                                        </select>
 
-      </ul>
+                                        @error('sensor_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                        {{-- Prediction Details --}}
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-0 p-3 p-md-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-info bg-opacity-10 text-info rounded-3 p-3">
+                                        <i class="fa-regular fa-clock fa-lg"></i>
+                                    </div>
+
+                                    <div>
+                                        <h5 class="fw-bold mb-1">Prediction Details</h5>
+                                        <p class="text-muted small mb-0">
+                                            Edit timestamps, probability and model information.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body p-3 p-md-4">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="predicted_at" class="form-label fw-semibold">
+                                            Predicted At <span class="text-danger">*</span>
+                                        </label>
+
+                                        <input type="datetime-local" name="predicted_at"
+                                               id="predicted_at"
+                                               class="form-control @error('predicted_at') is-invalid @enderror"
+                                               value="{{ old('predicted_at', optional($prediction->predicted_at)->format('Y-m-d\TH:i')) }}"
+                                               required>
+
+                                        @error('predicted_at')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="predicted_failure_at" class="form-label fw-semibold">
+                                            Predicted Failure At
+                                        </label>
+
+                                        <input type="datetime-local" name="predicted_failure_at"
+                                               id="predicted_failure_at"
+                                               class="form-control @error('predicted_failure_at') is-invalid @enderror"
+                                               value="{{ old('predicted_failure_at', optional($prediction->predicted_failure_at)->format('Y-m-d\TH:i')) }}">
+
+                                        @error('predicted_failure_at')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="probability" class="form-label fw-semibold">
+                                            Probability
+                                        </label>
+
+                                        <input type="number" step="0.0001" min="0" max="1"
+                                               name="probability" id="probability"
+                                               class="form-control @error('probability') is-invalid @enderror"
+                                               value="{{ old('probability', $prediction->probability) }}"
+                                               placeholder="e.g. 0.8500">
+
+                                        <div class="form-text">
+                                            Enter a value between 0 and 1.
+                                        </div>
+
+                                        @error('probability')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="component" class="form-label fw-semibold">
+                                            Component
+                                        </label>
+
+                                        <input type="text" name="component" id="component"
+                                               class="form-control @error('component') is-invalid @enderror"
+                                               value="{{ old('component', $prediction->component) }}"
+                                               placeholder="Enter component name">
+
+                                        @error('component')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="model_version" class="form-label fw-semibold">
+                                            Model Version <span class="text-danger">*</span>
+                                        </label>
+
+                                        <input type="text" name="model_version" id="model_version"
+                                               class="form-control @error('model_version') is-invalid @enderror"
+                                               value="{{ old('model_version', $prediction->model_version) }}"
+                                               placeholder="e.g. v1.0.0" required>
+
+                                        @error('model_version')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="status" class="form-label fw-semibold">
+                                            Status <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select name="status" id="status"
+                                                class="form-select @error('status') is-invalid @enderror"
+                                                required>
+                                            @foreach(['open', 'acknowledged', 'converted', 'resolved'] as $status)
+                                                <option value="{{ $status }}"
+                                                    {{ old('status', $prediction->status) === $status ? 'selected' : '' }}>
+                                                    {{ ucfirst($status) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('status')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Explanation --}}
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-0 p-3 p-md-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-warning bg-opacity-10 text-warning rounded-3 p-3">
+                                        <i class="fa-solid fa-code fa-lg"></i>
+                                    </div>
+
+                                    <div>
+                                        <h5 class="fw-bold mb-1">Prediction Explanation</h5>
+                                        <p class="text-muted small mb-0">
+                                            Review or update the explanation in JSON format.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body p-3 p-md-4">
+                                <label for="explanation" class="form-label fw-semibold">
+                                    Explanation (JSON)
+                                </label>
+
+                                <textarea name="explanation" id="explanation" rows="5"
+                                          class="form-control font-monospace @error('explanation') is-invalid @enderror"
+                                          placeholder='{"importance": {"vibration": 0.8}}'>{{ old('explanation', is_array($prediction->explanation) ? json_encode($prediction->explanation, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) : $prediction->explanation) }}</textarea>
+
+                                <div class="form-text">
+                                    Example: {"importance": {"vibration": 0.8}}
+                                </div>
+
+                                @error('explanation')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- Form Actions --}}
+                        <div class="d-flex flex-wrap justify-content-end gap-2 mb-4">
+                            <a href="{{ route('admin.predictions.index') }}"
+                               class="btn btn-dark fs-14">
+                                <i class="fa-solid fa-xmark me-2"></i>
+                                Cancel
+                            </a>
+
+                            <button type="submit" class="btn theme-btn">
+                                <i class="fa-solid fa-floppy-disk me-2"></i>
+                                Update Prediction
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
     </div>
-
-  @endif
-
-
-
-  <form method="POST" action="{{ route('admin.predictions.update', $prediction) }}" class="bg-white p-3 border-0 rounded">
-
-    @csrf
-
-    @method('PUT')
-
-    <div class="row g-3">
-
-      <div class="col-md-6">
-
-        <label class="form-label">Machine</label>
-
-        <select name="machine_id" class="form-select" required>
-
-          @foreach($machines as $machine)
-
-            <option value="{{ $machine->id }}" {{ $prediction->machine_id==$machine->id?'selected':'' }}>{{ $machine->name }}</option>
-
-          @endforeach
-
-        </select>
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Sensor (optional)</label>
-
-        <select name="sensor_id" class="form-select">
-
-          <option value="">None</option>
-
-          @foreach($sensors as $sensor)
-
-            <option value="{{ $sensor->id }}" {{ $prediction->sensor_id==$sensor->id?'selected':'' }}>{{ $sensor->device_id }}</option>
-
-          @endforeach
-
-        </select>
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Predicted At</label>
-
-        <input type="datetime-local" name="predicted_at" class="form-control" value="{{ optional($prediction->predicted_at)->format('Y-m-d\TH:i') }}" required>
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Predicted Failure At</label>
-
-        <input type="datetime-local" name="predicted_failure_at" class="form-control" value="{{ optional($prediction->predicted_failure_at)->format('Y-m-d\TH:i') }}">
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Probability (0-1)</label>
-
-        <input type="number" step="0.0001" min="0" max="1" name="probability" class="form-control" value="{{ $prediction->probability }}">
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Component</label>
-
-        <input type="text" name="component" class="form-control" value="{{ $prediction->component }}">
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Model Version</label>
-
-        <input type="text" name="model_version" class="form-control" value="{{ $prediction->model_version }}" required>
-
-      </div>
-
-      <div class="col-12">
-
-        <label class="form-label">Explanation (JSON)</label>
-
-        <textarea name="explanation" class="form-control" rows="4">{{ is_array($prediction->explanation) ? json_encode($prediction->explanation) : $prediction->explanation }}</textarea>
-
-      </div>
-
-      <div class="col-md-6">
-
-        <label class="form-label">Status</label>
-
-        <select name="status" class="form-select" required>
-
-          @foreach(['open','acknowledged','converted','resolved'] as $status)
-
-            <option value="{{ $status }}" {{ $prediction->status === $status ? 'selected' : '' }}>{{ $status }}</option>
-
-          @endforeach
-
-        </select>
-
-      </div>
-
-    </div>
-
-    <div class="mt-3">
-
-      <button type="submit" class="btn btn-primary">Update</button>
-
-    </div>
-
-  </form>
-
-</div>
-
-</div>
-
-
+</main>
 
 @include('admin.include.footer')
-
-
-
-
-

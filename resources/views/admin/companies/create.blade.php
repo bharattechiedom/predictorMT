@@ -1,124 +1,165 @@
 @include('admin.include.header')
 
+<main class="admin-page-content">
+    <div class="container-fluid admin-layout">
+                
+        <div class="row">
+           @include('admin.include.sidebar-nav')
+            <div class="col-12 col-md-9 col-lg-10 dashboard-wrapper">
 
+    
 
-<div class="col-md-9 col-lg-10 p-0">
+            {{-- Add Company --}}
+<div class="main-content p-4">
 
-            <nav class="navbar navbar-expand-lg navbar-custom bg-black">
+    <div class="card border-0 shadow-sm rounded-4">
 
-                <div class="container-fluid">
-
-                    <span class="navbar-brand mb-0 h1 text-white">Add Company</span>
-
+        {{-- Header --}}
+        <div class="card-header bg-white border-0 p-4 pb-0">
+            <div class="d-flex align-items-center gap-3">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-3">
+                    <i class="fa-solid fa-building fa-lg"></i>
                 </div>
 
-            </nav>
+                <div>
+                    <h4 class="mb-1 fw-bold">Add Company</h4>
+                    <p class="text-muted small mb-0">
+                        Create a new company and configure its plan.
+                    </p>
+                </div>
+            </div>
+        </div>
 
+        <div class="card-body p-4">
 
+            {{-- Validation Errors --}}
+            @if($errors->any())
+                <div class="alert alert-danger border-0 rounded-3">
+                    <div class="fw-semibold mb-2">
+                        <i class="fa-solid fa-circle-exclamation me-2"></i>
+                        Please fix the following errors:
+                    </div>
 
-            <div class="main-content p-4">
+                    <ul class="mb-0 ps-4">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-                    <div class="card bg-white p-3 border-0">
+            <form action="{{ route('admin.companies.store') }}" method="POST">
+                @csrf
 
-                    <div class="card-body">
+                <div class="row g-4">
 
+                    {{-- Company Name --}}
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            <i class="fa-solid fa-building text-primary me-2"></i>
+                            Company Name <span class="text-danger">*</span>
+                        </label>
 
+                        <input
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            placeholder="Enter company name"
+                            value="{{ old('name') }}"
+                            required
+                        >
+                    </div>
 
-                        @if($errors->any())
+                    {{-- Country --}}
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            <i class="fa-solid fa-globe text-primary me-2"></i>
+                            Country
+                        </label>
 
-                            <div class="alert alert-danger">
+                        <input
+                            type="text"
+                            name="country"
+                            class="form-control"
+                            placeholder="Enter country"
+                            value="{{ old('country') }}"
+                        >
+                    </div>
 
-                                <ul class="mb-0">
+                    {{-- Timezone --}}
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            <i class="fa-solid fa-clock text-primary me-2"></i>
+                            Timezone
+                        </label>
 
-                                    @foreach($errors->all() as $error)
+                        <input
+                            type="text"
+                            name="timezone"
+                            class="form-control"
+                            placeholder="e.g. Asia/Kolkata"
+                            value="{{ old('timezone', 'UTC') }}"
+                        >
 
-                                        <li>{{ $error }}</li>
+                        <small class="text-muted">
+                            Set the company's preferred timezone.
+                        </small>
+                    </div>
 
-                                    @endforeach
+                    {{-- Plan --}}
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            <i class="fa-solid fa-layer-group text-primary me-2"></i>
+                            Subscription Plan
+                        </label>
 
-                                </ul>
+                        <select name="plan_id" class="form-select">
+                            <option value="">-- Select Plan (Optional) --</option>
 
-                            </div>
-
-                        @endif
-
-
-
-                        <form action="{{ route('admin.companies.store') }}" method="POST">
-
-                            @csrf
-
-
-
-                            <div class="mb-3">
-
-                                <label class="form-label">Name</label>
-
-                                <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
-
-                            </div>
-
-
-
-                            <div class="mb-3">
-
-                                <label class="form-label">Country</label>
-
-                                <input type="text" name="country" class="form-control" value="{{ old('country') }}">
-
-                            </div>
-
-
-
-                            <div class="mb-3">
-
-                                <label class="form-label">Timezone</label>
-
-                                <input type="text" name="timezone" class="form-control" value="{{ old('timezone', 'UTC') }}">
-
-                            </div>
-
-
-
-                            <div class="mb-3">
-
-                                <label class="form-label">Plan</label>
-
-                                <select name="plan_id" class="form-select">
-
-                                    <option value="">-- None --</option>
-
-                                    @foreach($plans as $plan)
-
-                                        <option value="{{ $plan->id }}">{{ $plan->name }} ({{ $plan->machines_included }} machines)</option>
-
-                                    @endforeach
-
-                                </select>
-
-                            </div>
-
-
-
-                            <div class="mt-3">
-
-                                <button class="btn btn-primary">Create Company</button>
-
-                                <a href="{{ route('admin.companies.index') }}" class="btn btn-secondary">Cancel</a>
-
-                            </div>
-
-                        </form>
-
+                            @foreach($plans as $plan)
+                                <option
+                                    value="{{ $plan->id }}"
+                                    @selected(old('plan_id') == $plan->id)
+                                >
+                                    {{ $plan->name }}
+                                    ({{ $plan->machines_included }} machines)
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                 </div>
 
-            </div>
+                {{-- Footer Actions --}}
+                <div class="d-flex flex-wrap justify-content-end gap-2 border-top mt-4 pt-4">
 
+                    <a href="{{ route('admin.companies.index') }}"
+                       class="btn btn-danger">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn theme-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        Create Company
+                    </button>
+
+                </div>
+
+            </form>
         </div>
+    </div>
+</div>
 
 
 
-@include('admin.include.footer')
 
+                
+            </div>
+        </div>
+    </div>
+</main>
+           
+
+
+    @include('admin.include.footer')

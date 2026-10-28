@@ -1,160 +1,242 @@
+```blade
 @include('admin.include.header')
 
+<main class="admin-page-content">
+    <div class="container-fluid admin-layout">
+        <div class="row">
 
+            @include('admin.include.sidebar-nav')
 
-<div class="col-md-9 col-lg-10 p-0">
+            <div class="col-12 col-md-9 col-lg-10 dashboard-wrapper">
+                <div class="main-content">
 
-            <nav class="navbar navbar-expand-lg navbar-custom">
-
-                <div class="container-fluid">
-
-                    <span class="navbar-brand mb-0 h1">Edit User</span>
-
-                </div>
-
-            </nav>
-
-
-
-            <div class="main-content p-4">
-
-                    <div class="card bg-white p-3 border-0">
-
-                    <div class="card-body">
-
-
-
-                        @if($errors->any())
-
-                            <div class="alert alert-danger">
-
-                                <ul class="mb-0">
-
-                                    @foreach($errors->all() as $error)
-
-                                        <li>{{ $error }}</li>
-
-                                    @endforeach
-
-                                </ul>
-
+                    {{-- Page Header --}}
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-3">
+                                <i class="fas fa-user-edit fa-lg"></i>
                             </div>
 
-                        @endif
+                            <div>
+                                <h4 class="fw-bold mb-1">Edit User</h4>
+                                <p class="text-muted mb-0 small">
+                                    Update user details, company assignment and role.
+                                </p>
+                            </div>
+                        </div>
 
+                        <a href="{{ route('admin.users.index') }}"
+                            class="btn btn-outline-secondary rounded-3">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Users
+                        </a>
+                    </div>
 
-
-                        <form action="{{ route('admin.users.update', $user) }}" method="POST">
-
-                            @csrf
-
-                            @method('PUT')
-
-
-
-                            <div class="mb-3">
-
-                                <label class="form-label">Company</label>
-
-                                <select name="company_id" class="form-select">
-
-                                    <option value="">-- None --</option>
-
-                                    @foreach($companies as $company)
-
-                                        <option value="{{ $company->id }}" @if($user->company_id == $company->id) selected @endif>{{ $company->name }}</option>
-
-                                    @endforeach
-
-                                </select>
-
+                    {{-- Validation Errors --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+                            <div class="fw-semibold mb-2">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                Please correct the following errors:
                             </div>
 
+                            <ul class="mb-0 ps-4">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
 
+                            <button type="button" class="btn-close"
+                                data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
 
-                            <div class="mb-3">
+                    {{-- Edit User Form --}}
+                    <div class="card border-0 shadow-sm rounded-4">
 
-                                <label class="form-label">Name</label>
+                        <div class="card-header bg-white border-0 p-4">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-3">
+                                    <i class="fas fa-id-card fa-lg"></i>
+                                </div>
 
-                                <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}" required>
-
+                                <div>
+                                    <h5 class="fw-bold mb-1">User Information</h5>
+                                    <p class="text-muted small mb-0">
+                                        Editing account for {{ $user->name }}.
+                                    </p>
+                                </div>
                             </div>
+                        </div>
 
+                        <div class="card-body p-4 border-top">
 
+                            <form action="{{ route('admin.users.update', $user) }}" method="POST">
+                                @csrf
+                                @method('PUT')
 
-                            <div class="mb-3">
+                                <div class="row g-3">
 
-                                <label class="form-label">Email</label>
+                                    {{-- Company --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="company_id" class="form-label fw-semibold">
+                                            Company
+                                        </label>
 
-                                <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+                                        <select name="company_id"
+                                            id="company_id"
+                                            class="form-select @error('company_id') is-invalid @enderror">
 
-                            </div>
+                                            <option value="">-- None --</option>
 
+                                            @foreach ($companies as $company)
+                                                <option value="{{ $company->id }}"
+                                                    {{ old('company_id', $user->company_id) == $company->id ? 'selected' : '' }}>
+                                                    {{ $company->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
 
+                                        @error('company_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <div class="mb-3">
+                                    {{-- Name --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="name" class="form-label fw-semibold">
+                                            Name <span class="text-danger">*</span>
+                                        </label>
 
-                                <label class="form-label">Password (leave blank to keep current)</label>
+                                        <input type="text"
+                                            name="name"
+                                            id="name"
+                                            class="form-control @error('name') is-invalid @enderror"
+                                            value="{{ old('name', $user->name) }}"
+                                            placeholder="Enter full name"
+                                            required>
 
-                                <input type="password" name="password" class="form-control">
+                                        @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            </div>
+                                    {{-- Email --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="email" class="form-label fw-semibold">
+                                            Email Address <span class="text-danger">*</span>
+                                        </label>
 
+                                        <input type="email"
+                                            name="email"
+                                            id="email"
+                                            class="form-control @error('email') is-invalid @enderror"
+                                            value="{{ old('email', $user->email) }}"
+                                            placeholder="name@example.com"
+                                            required>
 
+                                        @error('email')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <div class="mb-3">
+                                    {{-- Password --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="password" class="form-label fw-semibold">
+                                            Password
+                                        </label>
 
-                                <label class="form-label">Phone</label>
+                                        <input type="password"
+                                            name="password"
+                                            id="password"
+                                            class="form-control @error('password') is-invalid @enderror"
+                                            autocomplete="new-password"
+                                            placeholder="Leave blank to keep current password">
 
-                                <input type="text" name="phone" class="form-control" value="{{ old('phone', $user->phone) }}">
+                                        <div class="form-text">
+                                            Leave blank to keep the current password unchanged.
+                                        </div>
 
-                            </div>
+                                        @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
+                                    {{-- Phone --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="phone" class="form-label fw-semibold">
+                                            Phone
+                                        </label>
 
+                                        <input type="text"
+                                            name="phone"
+                                            id="phone"
+                                            class="form-control @error('phone') is-invalid @enderror"
+                                            value="{{ old('phone', $user->phone) }}"
+                                            placeholder="Enter phone number">
 
-                            <div class="mb-3">
+                                        @error('phone')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                                <label class="form-label">Role</label>
+                                    {{-- Role --}}
+                                    <div class="col-12 col-md-6">
+                                        <label for="role" class="form-label fw-semibold">
+                                            Role <span class="text-danger">*</span>
+                                        </label>
 
-                                <select name="role" class="form-select" required>
+                                        @php
+                                            $roles = [
+                                                'superadmin',
+                                                'admin',
+                                                'manager',
+                                                'technician',
+                                                'viewer',
+                                            ];
+                                        @endphp
 
-                                    @php
+                                        <select name="role"
+                                            id="role"
+                                            class="form-select @error('role') is-invalid @enderror"
+                                            required>
 
-                                        $roles = ['superadmin','admin','manager','technician','viewer'];
+                                            @foreach ($roles as $r)
+                                                <option value="{{ $r }}"
+                                                    {{ old('role', $user->role) == $r ? 'selected' : '' }}>
+                                                    {{ ucfirst($r) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
 
-                                    @endphp
+                                        @error('role')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                                    @foreach($roles as $r)
+                                </div>
 
-                                        <option value="{{ $r }}" @if($user->role == $r) selected @endif>{{ ucfirst($r) }}</option>
+                                {{-- Form Actions --}}
+                                <div class="border-top mt-4 pt-4 d-flex flex-wrap justify-content-end gap-2">
+                                    <a href="{{ route('admin.users.index') }}"
+                                        class="btn btn-light border rounded-3 px-4">
+                                        Cancel
+                                    </a>
 
-                                    @endforeach
+                                    <button type="submit" class="btn btn-primary rounded-3 px-4">
+                                        <i class="fas fa-save me-2"></i>Update User
+                                    </button>
+                                </div>
 
-                                </select>
-
-                            </div>
-
-
-
-                            <div class="mt-3">
-
-                                <button class="btn btn-primary">Update User</button>
-
-                                <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Cancel</a>
-
-                            </div>
-
-                        </form>
-
+                            </form>
+                        </div>
                     </div>
 
                 </div>
-
             </div>
 
         </div>
-
-
+    </div>
+</main>
 
 @include('admin.include.footer')
-
+```
