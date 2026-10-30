@@ -2316,9 +2316,10 @@ footer {
     width: 100%;
     display: block;
     padding:10px;
+    background: #fff;
 }
 .sidenav-menu .navbar-brand img {
-    height: 60px;
+    height: 40px;
     width: auto;
 }
 

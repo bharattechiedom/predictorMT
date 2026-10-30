@@ -12,6 +12,8 @@ use App\Http\Controllers\User\MachineController as UserMachineController;
 
 use App\Http\Controllers\User\SensorController as UserSensorController;
 
+use App\Http\Controllers\User\SimulationController as UserSimulationController;
+
 use App\Http\Controllers\User\PredictionController as UserPredictionController;
 
 use App\Http\Controllers\User\MaintenanceTaskController as UserMaintenanceTaskController;
@@ -224,6 +226,9 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
     Route::resource('machines', UserMachineController::class)->names('user.machines');
 
     Route::resource('sensors', UserSensorController::class)->names('user.sensors');
+
+
+     Route::resource('simulation', UserSimulationController::class)->names('user.simulation');
 
     
     // Predictions routes
