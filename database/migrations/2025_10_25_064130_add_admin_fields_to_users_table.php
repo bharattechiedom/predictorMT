@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('user')->after('email');
-            $table->boolean('is_admin')->default(false)->after('role');
+            if (!Schema::hasColumn('users', 'is_admin')) {
+                $table->boolean('is_admin')->default(false);
+            }
+            if (!Schema::hasColumn('users', 'country')) {
+                $table->string('country')->nullable();
+            }
         });
     }
 
@@ -23,7 +27,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['role', 'is_admin']);
+            $columns = array_values(array_filter(
+                ['is_admin', 'country'],
+                fn ($column) => Schema::hasColumn('users', $column)
+            ));
+
+            if ($columns) $table->dropColumn($columns);
         });
     }
 };

@@ -853,8 +853,11 @@
   <script src="{{ asset('public/assets/js/chart.js') }}"></script>
 
   <script>
+  const predictorInitialReadings = Array.isArray(window.predictorReadings) ? window.predictorReadings : [];
+  const predictorLabels = predictorInitialReadings.map(reading => reading.timestamp ? new Date(reading.timestamp).toLocaleTimeString() : '');
+  const predictorValues = key => predictorInitialReadings.map(reading => Number(reading.values?.[key])).filter(Number.isFinite);
 
-var options = {
+  var options = {
 
     chart: {
 
@@ -882,7 +885,7 @@ var options = {
 
             name: 'Temperature',
 
-            data: [45,48,50,54,58,60,63,66,68]
+            data: predictorValues('temperature')
 
         },
 
@@ -890,7 +893,7 @@ var options = {
 
             name: 'Pressure',
 
-            data: [100,102,105,108,110,114,116,118,120]
+            data: predictorValues('pressure')
 
         },
 
@@ -898,7 +901,7 @@ var options = {
 
             name: 'RPM',
 
-            data: [1200,1225,1250,1280,1320,1360,1400,1430,1450]
+            data: predictorValues('rpm')
 
         },
 
@@ -906,7 +909,7 @@ var options = {
 
             name: 'Vibration',
 
-            data: [1.1,1.2,1.3,1.5,1.6,1.8,2.0,2.2,2.3]
+            data: predictorValues('vibration')
 
         }
 
@@ -956,27 +959,7 @@ var options = {
 
     xaxis: {
 
-        categories: [
-
-            '10:00',
-
-            '10:05',
-
-            '10:10',
-
-            '10:15',
-
-            '10:20',
-
-            '10:25',
-
-            '10:30',
-
-            '10:35',
-
-            '10:40'
-
-        ]
+        categories: predictorLabels
 
     },
 
@@ -1000,15 +983,23 @@ var options = {
 
 };
 
-var chart = new ApexCharts(
-
-    document.querySelector("#realtimeAreaChart"),
-
-    options
-
-);
-
-chart.render();
+var dashboardChartElement = document.querySelector("#realtimeAreaChart");
+if (dashboardChartElement && typeof ApexCharts !== 'undefined') {
+    var chart = new ApexCharts(dashboardChartElement, options);
+    chart.render();
+    window.updatePredictorDashboardChart = function (readings) {
+        const valid = Array.isArray(readings) ? readings : [];
+        chart.updateOptions({
+            xaxis: {categories: valid.map(reading => reading.timestamp ? new Date(reading.timestamp).toLocaleTimeString() : '')}
+        });
+        chart.updateSeries([
+            {name: 'Temperature', data: valid.map(reading => Number(reading.values?.temperature))},
+            {name: 'Pressure', data: valid.map(reading => Number(reading.values?.pressure))},
+            {name: 'RPM', data: valid.map(reading => Number(reading.values?.rpm))},
+            {name: 'Vibration', data: valid.map(reading => Number(reading.values?.vibration))}
+        ]);
+    };
+}
 
 </script>
 
@@ -1021,17 +1012,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!canvas) return;
 
-        new Chart(canvas, {
+        const readings = Array.isArray(window.predictorReadings) ? window.predictorReadings : [];
+        const readingKey = {
+            temperatureChart: 'temperature',
+            pressureChart: 'pressure',
+            vibrationChart: 'vibration',
+            rpmChart: 'rpm'
+        }[id];
+        const chartData = readingKey
+            ? readings.map(reading => Number(reading.values?.[readingKey])).filter(Number.isFinite)
+            : data;
+        const chart = new Chart(canvas, {
 
             type: 'line',
 
             data: {
 
-                labels: ['10:00','10:05','10:10','10:15','10:20','10:25'],
+                labels: readings.map(reading => reading.timestamp ? new Date(reading.timestamp).toLocaleTimeString() : ''),
 
                 datasets: [{
 
-                    data: data,
+                    data: chartData,
 
                     borderColor: borderColor,
 
@@ -1091,45 +1092,69 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
 
+        window.predictorSensorCharts = window.predictorSensorCharts || {};
+        window.predictorSensorCharts[id] = chart;
+
     }
 
     createChart(
         "temperatureChart",
-        [45,48,52,58,62,68],
+        [],
         "#ff4d6d",
         "rgba(255,77,109,.15)"
     );
 
     createChart(
         "pressureChart",
-        [100,105,110,115,118,120],
+        [],
         "#f59e0b",
         "rgba(245,158,11,.15)"
     );
 
     createChart(
         "vibrationChart",
-        [1.1,1.3,1.5,1.8,2.0,2.3],
+        [],
         "#06b6d4",
         "rgba(6,182,212,.15)"
     );
 
     createChart(
         "rpmChart",
-        [1200,1250,1300,1350,1400,1450],
+        [],
         "#22c55e",
         "rgba(34,197,94,.15)"
     );
 
 });
+
+window.updatePredictorDashboardReadings = function (readings) {
+    if (typeof window.updatePredictorDashboardChart === 'function') {
+        window.updatePredictorDashboardChart(readings);
+    }
+
+    const metricByChart = {
+        temperatureChart: 'temperature',
+        pressureChart: 'pressure',
+        vibrationChart: 'vibration',
+        rpmChart: 'rpm'
+    };
+
+    Object.entries(metricByChart).forEach(([id, metric]) => {
+        const sensorChart = window.predictorSensorCharts?.[id];
+        if (!sensorChart) return;
+        sensorChart.data.labels = readings.map(reading => reading.timestamp ? new Date(reading.timestamp).toLocaleTimeString() : '');
+        sensorChart.data.datasets[0].data = readings.map(reading => Number(reading.values?.[metric])).filter(Number.isFinite);
+        sensorChart.update('none');
+    });
+};
 </script>
 <script>
-    <script>
 document.addEventListener("DOMContentLoaded", function () {
 
     const ctx = document.getElementById("healthGauge");
 
     if (!ctx) return;
+    const healthPercent = Number(window.predictorHealthPercent ?? 0);
 
     new Chart(ctx, {
 
@@ -1140,7 +1165,7 @@ document.addEventListener("DOMContentLoaded", function () {
             labels: ['Healthy', 'Remaining'],
 
             datasets: [{
-                data: [96, 4],
+                data: [healthPercent, 100 - healthPercent],
                 backgroundColor: [
                     '#22c55e',
                     '#e9ecef'
@@ -1190,7 +1215,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 ctx.fillStyle = "#198754";
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
-                ctx.fillText("96%", meta.x, meta.y - 8);
+                ctx.fillText(`${healthPercent}%`, meta.x, meta.y - 8);
 
                 ctx.font = "14px Arial";
                 ctx.fillStyle = "#6c757d";
@@ -1205,8 +1230,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-</script>
-
 </script>
 @stack('scripts')
 

@@ -9,18 +9,20 @@ class SensorReading extends Model
 {
     use HasFactory;
 
+    public const UPDATED_AT = null;
+
     protected $fillable = [
         'sensor_id',
         'machine_id',
         'timestamp',
         'payload',
-        'value_float'
+        'value_float',
     ];
 
     protected $casts = [
         'timestamp' => 'datetime',
         'payload' => 'array',
-        'value_float' => 'float'
+        'value_float' => 'float',
     ];
 
     // Relationships

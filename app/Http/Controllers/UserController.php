@@ -11,6 +11,10 @@ use App\Models\Company;
 use App\Models\Demo;
 use App\Models\Payment;
 use App\Models\Subscription;
+use App\Models\Machine;
+use App\Models\Sensor;
+use App\Models\SensorReading;
+use App\Models\Alert;
 
 class UserController extends Controller
 {
@@ -197,6 +201,53 @@ class UserController extends Controller
         }
 
         $user = Auth::user();
+        $machines = $user->company_id
+            ? Machine::where('company_id', $user->company_id)->orderBy('name')->get()
+            : collect();
+        $machineIds = $machines->modelKeys();
+        $runningMachineCount = $machines->filter(
+            fn (Machine $machine) => data_get($machine->metadata, 'simulation.status') === 'running'
+        )->count();
+        $activeSensorCount = $user->company_id
+            ? Sensor::whereHas('machine', fn ($query) => $query->where('company_id', $user->company_id))
+                ->where('status', 'active')
+                ->count()
+            : 0;
+        $connectedSensorCount = $user->company_id
+            ? Sensor::whereHas('machine', fn ($query) => $query->where('company_id', $user->company_id))
+                ->where('status', 'active')
+                ->where('last_seen', '>=', now()->subMinutes(5))
+                ->count()
+            : 0;
+        $staleSensorCount = $activeSensorCount - $connectedSensorCount;
+        $activeAlertsCount = $user->company_id
+            ? Alert::where('company_id', $user->company_id)->whereNull('acknowledged_at')->count()
+            : 0;
+        $healthyMachineCount = $machines->where('status', 'healthy')->count();
+        $healthPercent = $machines->isEmpty()
+            ? 0
+            : (int) round($healthyMachineCount / $machines->count() * 100);
+        $sensorReadings = empty($machineIds)
+            ? collect()
+            : SensorReading::whereIn('machine_id', $machineIds)
+                ->whereNotNull('payload')
+                ->latest('timestamp')
+                ->limit(60)
+                ->get()
+                ->reverse()
+                ->values()
+                ->map(function (SensorReading $reading) {
+                    $payload = $reading->payload ?? [];
+
+                    return [
+                        'timestamp' => $reading->timestamp?->toIso8601String(),
+                        'values' => $payload['values'] ?? $payload,
+                    ];
+                });
+        $events = $user->company_id
+            ? Alert::with('machine')->where('company_id', $user->company_id)->latest()->limit(8)->get()
+            : collect();
+
         // Load recent payments for this user (match by customer email)
         $payments = [];
         try {
@@ -219,7 +270,88 @@ class UserController extends Controller
             $subscriptions = collect();
         }
 
-        return view('user.index', compact('user', 'payments', 'subscriptions'));
+        return view('user.index', compact(
+            'user',
+            'payments',
+            'subscriptions',
+            'machines',
+            'runningMachineCount',
+            'activeSensorCount',
+            'connectedSensorCount',
+            'staleSensorCount',
+            'activeAlertsCount',
+            'healthPercent',
+            'sensorReadings',
+            'events'
+        ));
+    }
+
+    public function sensorReadings(): \Illuminate\Http\JsonResponse
+    {
+        $companyId = Auth::user()->company_id;
+        $activeSensorCount = $companyId
+            ? Sensor::whereHas('machine', fn ($query) => $query->where('company_id', $companyId))
+                ->where('status', 'active')
+                ->count()
+            : 0;
+        $connectedSensorCount = $companyId
+            ? Sensor::whereHas('machine', fn ($query) => $query->where('company_id', $companyId))
+                ->where('status', 'active')
+                ->where('last_seen', '>=', now()->subMinutes(5))
+                ->count()
+            : 0;
+        $machines = $companyId
+            ? Machine::where('company_id', $companyId)->get()
+            : collect();
+        $readings = !$companyId
+            ? collect()
+            : SensorReading::whereHas('machine', fn ($query) => $query->where('company_id', $companyId))
+                ->whereNotNull('payload')
+                ->latest('timestamp')
+                ->limit(60)
+                ->get()
+                ->reverse()
+                ->values()
+                ->map(function (SensorReading $reading) {
+                    $payload = $reading->payload ?? [];
+
+                    return [
+                        'timestamp' => $reading->timestamp?->toIso8601String(),
+                        'values' => $payload['values'] ?? $payload,
+                    ];
+                });
+
+        return response()->json([
+            'readings' => $readings,
+            'machineCount' => $machines->count(),
+            'runningMachineCount' => $machines->filter(
+                fn (Machine $machine) => data_get($machine->metadata, 'simulation.status') === 'running'
+            )->count(),
+            'activeSensorCount' => $activeSensorCount,
+            'connectedSensorCount' => $connectedSensorCount,
+            'staleSensorCount' => $activeSensorCount - $connectedSensorCount,
+            'sensorFreshnessMinutes' => 5,
+            'activeAlertsCount' => $companyId
+                ? Alert::where('company_id', $companyId)->whereNull('acknowledged_at')->count()
+                : 0,
+            'healthPercent' => $machines->isEmpty()
+                ? 0
+                : (int) round($machines->where('status', 'healthy')->count() / $machines->count() * 100),
+            'events' => $companyId
+                ? Alert::with('machine')
+                    ->where('company_id', $companyId)
+                    ->latest()
+                    ->limit(8)
+                    ->get()
+                    ->map(fn (Alert $alert) => [
+                        'created_at' => $alert->created_at?->toIso8601String(),
+                        'machine' => $alert->machine?->name ?? 'Unknown machine',
+                        'message' => $alert->message,
+                        'level' => $alert->level,
+                        'acknowledged' => (bool) $alert->acknowledged_at,
+                    ])
+                : collect(),
+        ]);
     }
 
     /**
@@ -263,4 +395,3 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Your demo request has been submitted successfully. We will contact you soon!');
     }
 }
-

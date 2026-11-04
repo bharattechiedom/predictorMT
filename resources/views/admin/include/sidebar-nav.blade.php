@@ -101,7 +101,7 @@
                    
 
                     <a class="sidebar-link {{ request()->is('admin/settings*') ? 'active' : '' }}"
-                       href="{{ url('/admin/settings') }}">
+                       href="{{ route('admin.settings.index') }}">
                         <i class="fa-solid fa-sliders"></i>
                         <span>Settings</span>
                     </a>

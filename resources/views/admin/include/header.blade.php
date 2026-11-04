@@ -182,7 +182,7 @@
                             </li>
 
                             <li>
-                                <a class="dropdown-item" href="{{ url('/admin/settings') }}">
+                                <a class="dropdown-item" href="{{ route('admin.settings.index') }}">
                                     <i class="fa-solid fa-gear me-2"></i>
                                     Settings
                                 </a>

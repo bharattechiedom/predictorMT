@@ -11,10 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('maintenance_tasks', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        // The complete PredictorMT schema is created by create_predictormt_schema.
     }
 
     /**
@@ -22,6 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('maintenance_tasks');
+        // The complete PredictorMT schema is rolled back by create_predictormt_schema.
     }
 };

@@ -28,9 +28,9 @@
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
                                         <p class="text-muted mb-1 fw-semibold">Total Machines</p>
-                                        <h3 class="fw-bold mb-0">128</h3>
-                                        <small class="text-success">
-                                            <i class="fas fa-arrow-up"></i> +8%
+                                        <h3 class="fw-bold mb-0" id="total-machines">{{ $machines->count() }}</h3>
+                                        <small class="text-muted">
+                                            <i class="fas fa-industry"></i> Registered
                                         </small>
                                     </div>
 
@@ -48,7 +48,7 @@
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
                                         <p class="text-muted mb-1 fw-semibold">Running</p>
-                                        <h3 class="fw-bold mb-0">112</h3>
+                                        <h3 class="fw-bold mb-0" id="running-machines">{{ $runningMachineCount }}</h3>
                                         <small class="text-success">
                                             <i class="fas fa-circle"></i> Live
                                         </small>
@@ -68,7 +68,7 @@
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
                                         <p class="text-muted mb-1 fw-semibold">Active Faults</p>
-                                        <h3 class="fw-bold mb-0">05</h3>
+                                        <h3 class="fw-bold mb-0" id="dashboard-active-alerts">{{ $activeAlertsCount }}</h3>
                                         <small class="text-danger">
                                             <i class="fas fa-triangle-exclamation"></i> Critical
                                         </small>
@@ -88,9 +88,12 @@
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
                                         <p class="text-muted mb-1 fw-semibold">Sensors</p>
-                                        <h3 class="fw-bold mb-0">986</h3>
+                                        <h3 class="fw-bold mb-0" id="dashboard-active-sensors">{{ $connectedSensorCount }}</h3>
                                         <small class="text-primary">
-                                            <i class="fas fa-wifi"></i> Connected
+                                            <i class="fas fa-wifi"></i> Connected in last 5 min
+                                        </small>
+                                        <small class="text-warning d-block" id="dashboard-stale-sensors">
+                                            {{ $staleSensorCount }} active sensor(s) stale
                                         </small>
                                     </div>
 
@@ -107,10 +110,10 @@
                             <div class="card border-0 shadow-sm h-100" style="background: #EAFBF8;">
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
-                                        <p class="text-muted mb-1 fw-semibold">MQTT Status</p>
-                                        <h3 class="fw-bold mb-0">Online</h3>
-                                        <small class="text-success">
-                                            <i class="fas fa-check-circle"></i> Connected
+                                        <p class="text-muted mb-1 fw-semibold">HTTP ingestion</p>
+                                        <h3 class="fw-bold mb-0">Available</h3>
+                                        <small class="text-muted">
+                                            <i class="fas fa-circle-info"></i> Authenticated API
                                         </small>
                                     </div>
 
@@ -128,7 +131,7 @@
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
                                         <p class="text-muted mb-1 fw-semibold">Machine Health</p>
-                                        <h3 class="fw-bold mb-0">96%</h3>
+                                        <h3 class="fw-bold mb-0" id="dashboard-health-percent">{{ $healthPercent }}%</h3>
                                         <small class="text-success">
                                             <i class="fas fa-heart-pulse"></i> Excellent
                                         </small>
@@ -175,38 +178,6 @@
 
                     </div>
                     
-                    <div class="row mt-4">
-
-                        <div class="col-lg-12">
-
-                            <div class="card shadow-sm border-0">
-
-                                <div class="card-header d-flex justify-content-between align-items-center">
-
-                                    <h5 class="mb-0 text-white">
-                                        <i class="fas fa-chart-area me-2"></i>
-                                        Real-Time Sensor Analytics
-                                    </h5>
-
-                                    <span class="badge bg-success">
-                                        Live
-                                    </span>
-
-                                </div>
-
-                                <div class="card-body bg-white">
-
-                                    <div id="realtimeAreaChart"></div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
                     <div class="row mt-4">
 
                         <!-- Left Side : Live Sensor Charts -->
@@ -482,39 +453,19 @@
 
                                             </thead>
 
-                                            <tbody>
+                                            <tbody id="dashboard-events">
 
-                                                <tr>
-                                                    <td>10:05 AM</td>
-                                                    <td>Motor 01</td>
-                                                    <td>Temperature High</td>
-                                                    <td><span class="badge bg-danger">Critical</span></td>
-                                                    <td><span class="badge bg-success">Resolved</span></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>10:20 AM</td>
-                                                    <td>Pump 02</td>
-                                                    <td>Pressure Drop</td>
-                                                    <td><span class="badge bg-warning text-dark">Medium</span></td>
-                                                    <td><span class="badge bg-info">Monitoring</span></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>10:40 AM</td>
-                                                    <td>Generator</td>
-                                                    <td>Voltage Fluctuation</td>
-                                                    <td><span class="badge bg-primary">Low</span></td>
-                                                    <td><span class="badge bg-success">Stable</span></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>11:00 AM</td>
-                                                    <td>Conveyor</td>
-                                                    <td>Emergency Stop</td>
-                                                    <td><span class="badge bg-danger">Critical</span></td>
-                                                    <td><span class="badge bg-danger">Open</span></td>
-                                                </tr>
+                                                @forelse ($events as $event)
+                                                    <tr>
+                                                        <td>{{ optional($event->created_at)->format('H:i') ?? '—' }}</td>
+                                                        <td>{{ optional($event->machine)->name ?? 'Unknown machine' }}</td>
+                                                        <td>{{ $event->message }}</td>
+                                                        <td><span class="badge bg-{{ $event->level === 'critical' ? 'danger' : ($event->level === 'warning' ? 'warning text-dark' : 'info') }}">{{ ucfirst($event->level) }}</span></td>
+                                                        <td><span class="badge bg-{{ $event->acknowledged_at ? 'success' : 'secondary' }}">{{ $event->acknowledged_at ? 'Acknowledged' : 'Open' }}</span></td>
+                                                    </tr>
+                                                @empty
+                                                    <tr><td colspan="5" class="text-center text-muted py-4">No alerts recorded.</td></tr>
+                                                @endforelse
 
                                             </tbody>
 
@@ -1234,9 +1185,61 @@
 
 
 
-<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<script>
+window.predictorReadings = @json($sensorReadings);
+window.predictorHealthPercent = {{ $healthPercent }};
+function renderDashboardEvents(events) {
+    const body = document.getElementById('dashboard-events');
+    body.replaceChildren();
 
+    if (!events.length) {
+        const row = body.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = 5;
+        cell.className = 'text-center text-muted py-4';
+        cell.textContent = 'No alerts recorded.';
+        return;
+    }
 
+    const severityClasses = {critical: 'danger', warning: 'warning text-dark', info: 'info'};
+    events.forEach(event => {
+        const row = body.insertRow();
+        const time = event.created_at ? new Date(event.created_at).toLocaleTimeString() : '—';
+        [time, event.machine, event.message].forEach(value => {
+            row.insertCell().textContent = value ?? '—';
+        });
+
+        const severity = row.insertCell().appendChild(document.createElement('span'));
+        severity.className = `badge bg-${severityClasses[event.level] || 'secondary'}`;
+        severity.textContent = event.level.charAt(0).toUpperCase() + event.level.slice(1);
+
+        const state = row.insertCell().appendChild(document.createElement('span'));
+        state.className = `badge bg-${event.acknowledged ? 'success' : 'secondary'}`;
+        state.textContent = event.acknowledged ? 'Acknowledged' : 'Open';
+    });
+}
+
+window.setInterval(async () => {
+    try {
+        const response = await fetch(@json(route('user.dashboard.sensor-readings')), {headers: {'Accept': 'application/json'}});
+        if (!response.ok) throw new Error(`Dashboard data request failed (${response.status}).`);
+        const data = await response.json();
+        window.predictorReadings = data.readings;
+        document.getElementById('total-machines').textContent = data.machineCount;
+        document.getElementById('running-machines').textContent = data.runningMachineCount;
+        document.getElementById('dashboard-active-sensors').textContent = data.connectedSensorCount;
+        document.getElementById('dashboard-stale-sensors').textContent = `${data.staleSensorCount} active sensor(s) stale`;
+        document.getElementById('dashboard-active-alerts').textContent = data.activeAlertsCount;
+        document.getElementById('dashboard-health-percent').textContent = `${data.healthPercent}%`;
+        renderDashboardEvents(data.events);
+        window.predictorHealthPercent = data.healthPercent;
+        if (typeof window.updatePredictorDashboardReadings === 'function') {
+            window.updatePredictorDashboardReadings(data.readings);
+        }
+    } catch (error) {
+        console.error('Unable to refresh the live dashboard.', error);
+    }
+}, 5000);
+</script>
 
 @include('user.include.footer')
-
