@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-10">
                  <div class="page-content dashboard-page m-auto p-3 mt-5">
-                    <div class="page-title-head d-flex align-items-center gap-2 bg-transparent shadow-none m-0">
+                    <div class="page-title-head d-flex align-items-center gap-2 bg-transparent shadow-none m-0 px-0 mb-2">
                         <div class="flex-grow-1">
                             <h4 class="headings">KPIs, Live Data & Predictions Summary</h4>
                         </div>
@@ -28,18 +28,18 @@
 
                         <!-- Total Machines -->
                         <div class="col-xl-2 col-lg-4 col-md-6">
-                            <div class="card border-0 shadow-sm h-100" style="background: #EAF4FF;">
-                                <div class="card-body d-flex justify-content-between align-items-center">
+                            <div class="card border-1 shadow-sm h-100" style="background: #EAF4FF; border-color:#0D6EFD;">
+                                <div class="card-body d-flex justify-content-between align-items-start p-2 py-3">
                                     <div>
-                                        <p class="text-muted mb-1 fw-semibold">Total Machines</p>
-                                        <h3 class="fw-bold mb-0" id="total-machines">{{ $machines->count() }}</h3>
+                                        <p class="text-dark mb-1 fw-semibold">Total Machines</p>
+                                        <h1 class="fw-bold mb-1 fs-2" id="total-machines">{{ $machines->count() }}</h1>
                                         <small class="text-muted">
                                             <i class="fas fa-industry"></i> Registered
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard"
-                                        style="background: #0D6EFD;">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                        style="color: #0D6EFD;">
                                         <i class="fas fa-industry fa-lg"></i>
                                     </div>
                                 </div>
@@ -48,18 +48,18 @@
 
                         <!-- Running Machines -->
                         <div class="col-xl-2 col-lg-4 col-md-6">
-                            <div class="card border-0 shadow-sm h-100" style="background: #E9FFF3;">
-                                <div class="card-body d-flex justify-content-between align-items-center">
+                            <div class="card border-1 shadow-sm h-100" style="background: #E9FFF3; border-color:#198754;">
+                                <div class="card-body d-flex justify-content-between align-items-start p-2 py-3">
                                     <div>
-                                        <p class="text-muted mb-1 fw-semibold">Running</p>
-                                        <h3 class="fw-bold mb-0" id="running-machines">{{ $runningMachineCount }}</h3>
+                                        <p class="text-dark mb-1 fw-semibold">Running</p>
+                                        <h1 class="fw-bold mb-1 fs-2" id="running-machines">{{ $runningMachineCount }}</h1>
                                         <small class="text-success">
                                             <i class="fas fa-circle"></i> Live
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard"
-                                        style="background: #198754;">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                        style="color: #198754;">
                                         <i class="fas fa-play fa-lg"></i>
                                     </div>
                                 </div>
@@ -68,18 +68,18 @@
 
                         <!-- Active Faults -->
                         <div class="col-xl-2 col-lg-4 col-md-6">
-                            <div class="card border-0 shadow-sm h-100" style="background: #FFF4E8;">
-                                <div class="card-body d-flex justify-content-between align-items-center">
+                            <div class="card border-1 shadow-sm h-100" style="background: #FFF4E8;border-color:#FD7E14;">
+                                <div class="card-body d-flex justify-content-between align-items-start p-2 py-3">
                                     <div>
-                                        <p class="text-muted mb-1 fw-semibold">Active Faults</p>
-                                        <h3 class="fw-bold mb-0" id="dashboard-active-alerts">{{ $activeAlertsCount }}</h3>
+                                        <p class="text-dark mb-1 fw-semibold">Active Faults</p>
+                                        <h1 class="fw-bold mb-1 fs-2" id="dashboard-active-alerts">{{ $activeAlertsCount }}</h1>
                                         <small class="text-danger">
                                             <i class="fas fa-triangle-exclamation"></i> Critical
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard"
-                                        style="background: #FD7E14;">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                        style="color: #FD7E14;">
                                         <i class="fas fa-bug fa-lg"></i>
                                     </div>
                                 </div>
@@ -88,11 +88,11 @@
 
                         <!-- Active Sensors -->
                         <div class="col-xl-2 col-lg-4 col-md-6">
-                            <div class="card border-0 shadow-sm h-100" style="background: #F2F0FF;">
-                                <div class="card-body d-flex justify-content-between align-items-center">
+                            <div class="card border-1 shadow-sm h-100" style="background: #F2F0FF; border-color:#6F42C1;">
+                                <div class="card-body d-flex justify-content-between align-items-start p-2 py-3">
                                     <div>
-                                        <p class="text-muted mb-1 fw-semibold">Sensors</p>
-                                        <h3 class="fw-bold mb-0" id="dashboard-active-sensors">{{ $connectedSensorCount }}</h3>
+                                        <p class="text-dark mb-1 fw-semibold">Sensors</p>
+                                        <h1 class="fw-bold mb-1 fs-2" id="dashboard-active-sensors">{{ $connectedSensorCount }}</h1>
                                         <small class="text-primary">
                                             <i class="fas fa-wifi"></i> Connected in last 5 min
                                         </small>
@@ -101,8 +101,8 @@
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard"
-                                        style="background: #6F42C1;">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                        style="color: #6F42C1;">
                                         <i class="fas fa-microchip fa-lg"></i>
                                     </div>
                                 </div>
@@ -111,18 +111,18 @@
 
                         <!-- MQTT Status -->
                         <div class="col-xl-2 col-lg-4 col-md-6">
-                            <div class="card border-0 shadow-sm h-100" style="background: #EAFBF8;">
-                                <div class="card-body d-flex justify-content-between align-items-center">
+                            <div class="card border-1 shadow-sm h-100" style="background: #EAFBF8; border-color:#20C997;">
+                                <div class="card-body d-flex justify-content-between align-items-start p-2 py-3">
                                     <div>
-                                        <p class="text-muted mb-1 fw-semibold">HTTP ingestion</p>
-                                        <h3 class="fw-bold mb-0">Available</h3>
+                                        <p class="text-dark mb-1 fw-semibold">HTTP ingestion</p>
+                                        <h1 class="fw-bold mb-1 fs-3">Available</h1>
                                         <small class="text-muted">
                                             <i class="fas fa-circle-info"></i> Authenticated API
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard"
-                                        style="background: #20C997;">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                        style="color: #20C997;">
                                         <i class="fas fa-satellite-dish fa-lg"></i>
                                     </div>
                                 </div>
@@ -131,18 +131,18 @@
 
                         <!-- Machine Health -->
                         <div class="col-xl-2 col-lg-4 col-md-6">
-                            <div class="card border-0 shadow-sm h-100" style="background: #FFF0F3;">
-                                <div class="card-body d-flex justify-content-between align-items-center">
+                            <div class="card border-1 shadow-sm h-100" style="background: #FFF0F3;border-color:#DC3545;">
+                                <div class="card-body d-flex justify-content-between align-items-start p-2 py-3">
                                     <div>
-                                        <p class="text-muted mb-1 fw-semibold">Machine Health</p>
-                                        <h3 class="fw-bold mb-0" id="dashboard-health-percent">{{ $healthPercent }}%</h3>
+                                        <p class="text-dark mb-1 fw-semibold">Machine Health</p>
+                                        <h1 class="fw-bold mb-1 fs-2" id="dashboard-health-percent">{{ $healthPercent }}%</h1>
                                         <small class="text-success">
                                             <i class="fas fa-heart-pulse"></i> Excellent
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard"
-                                        style="background: #DC3545;">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                        style="color: #DC3545;">
                                         <i class="fas fa-heart-pulse fa-lg"></i>
                                     </div>
                                 </div>

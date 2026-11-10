@@ -58,12 +58,12 @@
                     <div class="row g-3 mt-2">
 
                         <div class="col-xl-2 col-lg-4 col-md-6 col-6">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body">
+                            <div class="card border-0 shadow-none h-100 bg-danger-subtle">
+                                <div class="card-body p-2 py-3">
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
-                                            <p class="text-muted small mb-2">Active Faults</p>
-                                            <h3 class="fw-bold text-danger mb-0">{{ $stats['activeFaults'] }}</h3>
+                                            <p class="text-dark small mb-2">Active Faults</p>
+                                            <h2 class="fs-2 fw-bold text-danger mb-0">{{ $stats['activeFaults'] }}</h2>
                                         </div>
                                         <i class="fa-solid fa-triangle-exclamation fs-3 text-danger"></i>
                                     </div>
@@ -72,12 +72,12 @@
                         </div>
 
                         <div class="col-xl-2 col-lg-4 col-md-6 col-6">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body">
+                            <div class="card border-0 shadow-none h-100 bg-warning-subtle">
+                                <div class="card-body p-2 py-3">
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
-                                            <p class="text-muted small mb-2">Critical</p>
-                                            <h3 class="fw-bold text-warning mb-0">{{ $stats['criticalFaults'] }}</h3>
+                                            <p class="text-dark small mb-2">Critical</p>
+                                            <h2 class="fs-2 fw-bold text-warning mb-0">{{ $stats['criticalFaults'] }}</h2>
                                         </div>
                                         <i class="fa-solid fa-radiation fs-3 text-warning"></i>
                                     </div>
@@ -86,12 +86,12 @@
                         </div>
 
                         <div class="col-xl-2 col-lg-4 col-md-6 col-6">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body">
+                            <div class="card border-0 shadow-none h-100 bg-primary-subtle">
+                                <div class="card-body p-2 py-3">
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
-                                            <p class="text-muted small mb-2">Scheduled</p>
-                                            <h3 class="fw-bold text-primary mb-0">{{ $stats['scheduledTasks'] }}</h3>
+                                            <p class="text-dark small mb-2">Scheduled</p>
+                                            <h2 class="fs-2 fw-bold text-primary mb-0">{{ $stats['scheduledTasks'] }}</h2>
                                         </div>
                                         <i class="fa-regular fa-calendar-check fs-3 text-primary"></i>
                                     </div>
@@ -100,12 +100,12 @@
                         </div>
 
                         <div class="col-xl-2 col-lg-4 col-md-6 col-6">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body">
+                            <div class="card border-0 shadow-none h-100 bg-success-subtle">
+                                <div class="card-body p-2 py-3">
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
-                                            <p class="text-muted small mb-2">Resolved</p>
-                                            <h3 class="fw-bold text-success mb-0">{{ $stats['resolvedTasks'] }}</h3>
+                                            <p class="text-dark small mb-2">Resolved</p>
+                                            <h2 class="fs-2 fw-bold text-success mb-0">{{ $stats['resolvedTasks'] }}</h2>
                                         </div>
                                         <i class="fa-solid fa-circle-check fs-3 text-success"></i>
                                     </div>
@@ -114,12 +114,12 @@
                         </div>
 
                         <div class="col-xl-2 col-lg-4 col-md-6 col-6">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body">
+                            <div class="card border-0 shadow-none h-100 bg-info-subtle">
+                                <div class="card-body p-2 py-3">
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
-                                            <p class="text-muted small mb-2">MTTR</p>
-                                            <h3 class="fw-bold text-info mb-0">—</h3>
+                                            <p class="text-dark small mb-2">MTTR</p>
+                                            <h2 class="fs-2 fw-bold text-info mb-0">—</h2>
                                         </div>
                                         <i class="fa-solid fa-stopwatch fs-3 text-info"></i>
                                     </div>
@@ -128,12 +128,12 @@
                         </div>
 
                         <div class="col-xl-2 col-lg-4 col-md-6 col-6">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body">
+                            <div class="card border-0 shadow-none h-100 bg-secondary-subtle">
+                                <div class="card-body p-2 py-3">
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
-                                            <p class="text-muted small mb-2">Machine Health</p>
-                                            <h3 class="fw-bold text-success mb-0">{{ $stats['machineHealth'] }}%</h3>
+                                            <p class="text-dark small mb-2">Machine Health</p>
+                                            <h2 class="fs-2 fw-bold text-success mb-0">{{ $stats['machineHealth'] }}%</h2>
                                         </div>
                                         <i class="fa-solid fa-heart-pulse fs-3 text-success"></i>
                                     </div>
@@ -143,16 +143,17 @@
 
                     </div>
 
+
                     {{-- Active Faults and Fault Summary --}}
                     <div class="row g-3 mt-2">
 
                         <div class="col-xl-8">
                             <div class="card border-0 shadow-sm h-100">
                                 <div class="card-header p-3">
-                                    <h5 class="fw-bold mb-0">
+                                    <h4 class="fs-4 fw-bold mb-0">
                                         <i class="fa-solid fa-list me-2 text-primary"></i>
                                         Active Faults
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body p-0">
@@ -194,10 +195,10 @@
                         <div class="col-xl-4">
                             <div class="card border-0 shadow-sm h-100">
                                 <div class="card-header p-3">
-                                    <h5 class="fw-bold mb-0">
+                                    <h4 class="fs-4 fw-bold mb-0">
                                         <i class="fa-solid fa-chart-pie me-2 text-primary"></i>
                                         Fault Summary
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body">
@@ -211,10 +212,10 @@
                     {{-- Maintenance Schedule --}}
                     <div class="card border-0 shadow-sm mt-3">
                         <div class="card-header p-3">
-                            <h5 class="fw-bold mb-0">
+                            <h4 class="fs-4 fw-bold mb-0">
                                 <i class="fa-regular fa-calendar-check me-2 text-primary"></i>
                                 Maintenance Schedule
-                            </h5>
+                            </h4>
                         </div>
 
                         <div class="card-body p-0">
@@ -240,7 +241,7 @@
                                                 <td>{{ $task->scheduled_at?->format('M d, Y') ?? '—' }}</td>
                                                 <td>—</td>
                                                 <td><span class="badge bg-{{ $task->status === 'in_progress' ? 'warning text-dark' : 'primary' }}">{{ ucfirst(str_replace('_', ' ', $task->status)) }}</span></td>
-                                                <td class="pe-3"><a class="btn btn-sm btn-outline-primary" href="{{ route('user.maintenance-tasks.show', $task) }}">View</a></td>
+                                                <td class="pe-3"><div class="d-flex justify-content-center gap-1 td_action_btn"><a class="btn btn-outline-primary w-75" href="{{ route('user.maintenance-tasks.show', $task) }}">View</a></div></td>
                                             </tr>
                                         @empty
                                             <tr><td colspan="7" class="text-center py-3">No scheduled maintenance tasks.</td></tr>
@@ -254,10 +255,10 @@
                     {{-- AI Maintenance Recommendation --}}
                     <div class="card border-0 shadow-sm mt-3">
                         <div class="card-header p-3">
-                            <h5 class="fw-bold mb-0">
+                            <h4 class="fs-4 fw-bold mb-0">
                                 <i class="fa-solid fa-robot me-2 text-primary"></i>
                                 AI Maintenance Recommendation
-                            </h5>
+                            </h4>
                         </div>
 
                         <div class="card-body">
@@ -298,10 +299,10 @@
                     {{-- Recovery Logs --}}
                     <div class="card border-0 shadow-sm mt-3">
                         <div class="card-header p-3">
-                            <h5 class="fw-bold mb-0">
+                            <h4 class="fs-4 fw-bold mb-0">
                                 <i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>
                                 Recovery Logs
-                            </h5>
+                            </h4>
                         </div>
 
                         <div class="card-body p-0">
@@ -340,14 +341,14 @@
 
                     {{-- Maintenance Tasks --}}
                     <div class="card border-0 shadow-sm mt-3">
-                        <div class="card-header p-3">
-                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="card-header p-3 pb-0">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 pb-0">
                                 <div>
-                                    <h5 class="fw-bold mb-1">
+                                    <h4 class="fs-4 fw-bold mb-1">
                                         <i class="fa-solid fa-screwdriver-wrench me-2 text-primary"></i>
                                         Maintenance Tasks
-                                    </h5>
-                                    <p class="text-muted small mb-0">
+                                    </h4>
+                                    <p class="text-muted small mb-1">
                                         Manage scheduled maintenance, assignments and task status.
                                     </p>
                                 </div>
@@ -475,16 +476,16 @@
                                                 </td>
 
                                                 <td class="text-center">
-                                                    <div class="d-inline-flex flex-wrap justify-content-center gap-1">
+                                                    <div class="d-flex justify-content-center gap-1 td_action_btn">
                                                         <a href="{{ route('user.maintenance-tasks.show', $task) }}"
-                                                           class="btn btn-sm btn-outline-primary"
+                                                           class="btn btn-outline-primary"
                                                            title="View Details"
                                                            aria-label="View task {{ $task->id }}">
                                                             <i class="fa-regular fa-eye"></i>
                                                         </a>
 
                                                         <a href="{{ route('user.maintenance-tasks.edit', $task) }}"
-                                                           class="btn btn-sm btn-outline-secondary"
+                                                           class="btn btn-outline-warning"
                                                            title="Edit Task"
                                                            aria-label="Edit task {{ $task->id }}">
                                                             <i class="fa-solid fa-pen-to-square"></i>
@@ -497,7 +498,7 @@
                                                             @method('DELETE')
 
                                                             <button type="submit"
-                                                                    class="btn btn-sm btn-outline-danger"
+                                                                    class="btn btn-outline-danger"
                                                                     title="Delete Task"
                                                                     aria-label="Delete task {{ $task->id }}">
                                                                 <i class="fa-regular fa-trash-can"></i>

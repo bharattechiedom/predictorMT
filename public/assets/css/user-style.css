@@ -320,3 +320,8 @@ background: #fff;
     width: 130px;
     height: 130px;
 }
+
+
+.badge_padding span{
+	padding: 10px;
+}

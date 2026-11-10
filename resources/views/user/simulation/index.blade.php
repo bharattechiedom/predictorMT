@@ -14,9 +14,9 @@
                             <h3 class="mb-1">Machinery simulation</h3>
                             <p class="text-muted mb-0">Running simulations generate readings in the background once per minute.</p>
                         </div>
-                        <div class="d-flex gap-2">
-                            <span id="simulation-status" class="badge text-bg-secondary">Stopped</span>
-                            <span id="operating-state" class="badge text-bg-secondary">Stopped</span>
+                        <div class="d-flex gap-2 badge_padding">
+                            <span id="simulation-status" class="badge text-bg-secondary p-1">Stopped</span>
+                            <span id="operating-state" class="badge text-bg-secondary p-1">Stopped</span>
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="card border-0 shadow-sm mb-4">
-                            <div class="card-header"><h5 class="mb-0">Simulation controls</h5></div>
+                            <div class="card-header pb-0"><h4 class="mb-0 pb-0">Simulation controls</h4></div>
                             <div class="card-body">
                                 <div class="row g-3 align-items-end">
                                     <div class="col-md-4">
@@ -73,7 +73,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label for="scenario-select" class="form-label">Scenario</label>
                                         <select id="scenario-select" class="form-select">
                                             @foreach ($scenarios as $value => $label)
@@ -142,15 +142,15 @@
                         </div>
 
                         <div class="card border-0 shadow-sm mb-4">
-                            <div class="card-header"><h5 class="mb-0">Historical playback</h5></div>
+                            <div class="card-header pb-0"><h4 class="mb-0">Historical playback</h4></div>
                             <div class="card-body">
                                 <div class="row g-3 align-items-end">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <label for="history-from" class="form-label">From</label>
                                         <input id="history-from" type="datetime-local" class="form-control"
                                                value="{{ now()->subDay()->format('Y-m-d\TH:i') }}">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <label for="history-to" class="form-label">To</label>
                                         <input id="history-to" type="datetime-local" class="form-control"
                                                value="{{ now()->format('Y-m-d\TH:i') }}">
@@ -189,19 +189,19 @@
                             <div class="col-lg-6">
                                 <div class="card h-100">
                                     <div class="card-header">Temperature (°C) and pressure (PSI)</div>
-                                    <div class="card-body"><canvas id="temperature-pressure-chart" height="180" aria-label="Temperature and pressure readings"></canvas></div>
+                                    <div class="card-body"><canvas id="temperature-pressure-chart" height="180" width="100%" aria-label="Temperature and pressure readings"></canvas></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="card h-100">
                                     <div class="card-header">Vibration (mm/s) and humidity (%)</div>
-                                    <div class="card-body"><canvas id="vibration-humidity-chart" height="180" aria-label="Vibration and humidity readings"></canvas></div>
+                                    <div class="card-body"><canvas id="vibration-humidity-chart" height="180" width="100%" aria-label="Vibration and humidity readings"></canvas></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="card h-100">
                                     <div class="card-header">Energy (kWh) and power (kW)</div>
-                                    <div class="card-body"><canvas id="energy-power-chart" height="180" aria-label="Energy and power readings"></canvas></div>
+                                    <div class="card-body"><canvas id="energy-power-chart" height="180" width="100%" aria-label="Energy and power readings"></canvas></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">

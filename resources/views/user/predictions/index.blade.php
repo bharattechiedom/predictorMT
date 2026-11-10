@@ -31,7 +31,7 @@
                     <div class="row g-3 mb-4">
 
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-0 shadow-none h-100 bg-info-subtle">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center gap-3">
                                         <div>
@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-0 shadow-none h-100 bg-danger-subtle">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center gap-3">
                                         <div>
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-0 shadow-none h-100 bg-success-subtle">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center gap-3">
                                         <div>
@@ -73,7 +73,7 @@
                         </div>
 
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-0 shadow-none h-100 bg-warning-subtle">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center gap-3">
                                         <div>
@@ -95,10 +95,10 @@
                         <div class="col-lg-8">
                             <div class="card border-0 shadow-none h-100">
                                 <div class="card-header p-0 mt-2">
-                                    <h5 class="fw-bold mb-0">
+                                    <h4 class="fs-4 fw-bold mb-0">
                                         <i class="fa-solid fa-brain me-2"></i>
                                         AI Predictions
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body p-0 mt-3">
@@ -134,12 +134,12 @@
 
                         {{-- Predictive Maintenance --}}
                         <div class="col-lg-4">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-0 shadow-none h-100 bg-light p-3">
                                 <div class="card-header p-0 mt-2">
-                                    <h5 class="fw-bold mb-0">
+                                    <h4 class="fs-4 fw-bold mb-0">
                                         <i class="fa-solid fa-screwdriver-wrench me-2"></i>
                                         Predictive Maintenance
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body p-0 mt-3">
@@ -180,12 +180,12 @@
                     <div class="row g-3 mb-4">
 
                         <div class="col-lg-8">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-1 shadow-none h-100 p-2">
                                 <div class="card-header p-0 mt-2">
-                                    <h5 class="fw-bold mb-0">
+                                    <h4 class="fs-4 fw-bold mb-0">
                                         <i class="fa-solid fa-chart-line me-2"></i>
                                         Failure Prediction Trend
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body p-0 mt-3">
@@ -195,12 +195,12 @@
                         </div>
 
                         <div class="col-lg-4">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-0 shadow-none h-100 bg-light p-3">
                                 <div class="card-header p-0 mt-2">
-                                    <h5 class="fw-bold mb-0">
+                                    <h4 class="fs-4 fw-bold mb-0">
                                         <i class="fa-solid fa-hourglass-half me-2"></i>
                                         Predicted Failure Date
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body text-center mt-3">
@@ -238,15 +238,15 @@
 
                         {{-- Failure Probability --}}
                         <div class="col-lg-4">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-0 shadow-none h-100 bg-light p-3">
                                 <div class="card-header p-0 mt-2">
-                                    <h5 class="fw-bold mb-0">
+                                    <h4 class="fs-4 fw-bold mb-0">
                                         <i class="fa-solid fa-bullseye me-2"></i>
                                         Failure Probability
-                                    </h5>
+                                    </h4>
                                 </div>
 
-                                <div class="card-body text-center mt-3">
+                                <div class="card-body text-center mt-3 p-0">
                                     <div id="failureGauge" style="height: 250px;"></div>
 
                                     <h3 class="fw-bold text-danger mb-2">{{ $highestRiskPrediction ? number_format((float) $highestRiskPrediction->probability * 100, 1) . '%' : '—' }}</h3>
@@ -278,15 +278,15 @@
 
                         {{-- AI Confidence --}}
                         <div class="col-lg-4">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-0 shadow-none h-100 bg-info-subtle p-3">
                                 <div class="card-header p-0 mt-2">
-                                    <h5 class="fw-bold mb-0">
+                                    <h4 class="fs-4 fw-bold mb-0">
                                         <i class="fa-solid fa-brain me-2"></i>
                                         Prediction Model
-                                    </h5>
+                                    </h4>
                                 </div>
 
-                                <div class="card-body text-center mt-3">
+                                <div class="card-body text-center mt-3 p-0">
                                     <div class="display-2 fw-bold text-success">{{ $highestRiskPrediction?->model_version ?: '—' }}</div>
 
                                     <p class="text-muted">
@@ -319,12 +319,12 @@
 
                         {{-- Machine Risk Matrix --}}
                         <div class="col-lg-4">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-0 shadow-none h-100 bg-light p-3">
                                 <div class="card-header p-0 mt-2">
-                                    <h5 class="fw-bold mb-0">
+                                    <h4 class="fs-4 fw-bold mb-0">
                                         <i class="fa-solid fa-table-cells-large me-2"></i>
                                         Machine Risk Matrix
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body p-0 mt-3">
@@ -349,7 +349,7 @@
                                         </table>
                                     </div>
 
-                                    <a href="{{ route('user.predictions.index') }}" class="btn btn-outline-primary w-100">View Predictions</a>
+                                    <a href="{{ route('user.predictions.index') }}" class="btn theme-btn w-100">View Predictions</a>
                                 </div>
                             </div>
                         </div>
@@ -359,10 +359,10 @@
                     {{-- Failure Filters --}}
                     <div class="card border-0 shadow-none mb-4">
                         <div class="card-header p-0 mt-2">
-                            <h5 class="fw-bold mb-0">
+                            <h4 class="fs-4 fw-bold mb-0">
                                 <i class="fa-solid fa-filter me-2"></i>
                                 Failure Investigation
-                            </h5>
+                            </h4>
                         </div>
 
                         <div class="card-body p-0 mt-3">
@@ -402,10 +402,10 @@
                     {{-- Failure Timeline --}}
                     <div class="card border-0 shadow-none mb-3">
                         <div class="card-header p-0 mt-2">
-                            <h5 class="fw-bold mb-0">
+                            <h4 class="fs-4 fw-bold mb-0">
                                 <i class="fa-solid fa-clock-rotate-left me-2"></i>
                                 Failure Timeline
-                            </h5>
+                            </h4>
                         </div>
 
                         <div class="card-body p-0 mt-3">
@@ -432,10 +432,10 @@
                     {{-- Recommendations --}}
                     <div class="card border-0 shadow-none mb-3">
                         <div class="card-header p-0 mt-2">
-                            <h5 class="fw-bold mb-0">
+                            <h4 class="fs-4 fw-bold mb-0">
                                 <i class="fa-regular fa-lightbulb me-2"></i>
                                 Recommendations
-                            </h5>
+                            </h4>
                         </div>
 
                         <div class="card-body p-0 mt-3">
@@ -457,10 +457,10 @@
                     {{-- ML Explanation --}}
                     <div class="card border-0 shadow-none mb-4">
                         <div class="card-header p-0 mt-2">
-                            <h5 class="fw-bold mb-0">
+                            <h4 class="fs-4 fw-bold mb-0">
                                 <i class="fa-solid fa-microchip me-2"></i>
                                 ML Explanation
-                            </h5>
+                            </h4>
                         </div>
 
                         <div class="card-body p-0 mt-3">
