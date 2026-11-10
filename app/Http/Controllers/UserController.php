@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alert;
+use App\Models\Company;
+use App\Models\Demo;
+use App\Models\Machine;
+use App\Models\MaintenanceTask;
+use App\Models\Payment;
+use App\Models\Sensor;
+use App\Models\SensorReading;
+use App\Models\Subscription;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Models\User;
-use App\Models\Company;
-use App\Models\Demo;
-use App\Models\Payment;
-use App\Models\Subscription;
-use App\Models\Machine;
-use App\Models\Sensor;
-use App\Models\SensorReading;
-use App\Models\Alert;
 
 class UserController extends Controller
 {
@@ -26,6 +27,7 @@ class UserController extends Controller
         if (Auth::check()) {
             return redirect()->route('user.dashboard');
         }
+
         return view('signin');
     }
 
@@ -46,7 +48,7 @@ class UserController extends Controller
         // Check if user exists by phone
         $user = User::where('phone', $request->phone)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return back()->withErrors([
                 'phone' => 'The provided credentials do not match our records.',
             ])->withInput($request->only('phone'));
@@ -100,6 +102,7 @@ class UserController extends Controller
         if (Auth::check()) {
             return redirect()->route('user.dashboard');
         }
+
         // No payment processing here: show simple signup form
         return view('signup');
     }
@@ -137,7 +140,7 @@ class UserController extends Controller
             'register_stripe_session' => $request->input('stripe_session_id'),
         ]);
 
-        return redirect()->route('signup')->with('show_otp', true)->withInput($request->only('name', 'phone','email'));
+        return redirect()->route('signup')->with('show_otp', true)->withInput($request->only('name', 'phone', 'email'));
     }
 
     /**
@@ -166,7 +169,7 @@ class UserController extends Controller
 
         // Create company (store phone for company contact)
         $company = Company::firstOrCreate(
-            ['name' => $name . "'s Company"],
+            ['name' => $name."'s Company"],
             ['address' => '', 'phone' => $phone, 'email' => $email]
         );
 
@@ -186,7 +189,7 @@ class UserController extends Controller
         $request->session()->regenerate();
 
         // Clean registration plan/session entries (no payment verification here)
-        $request->session()->forget(['register_plan_id','register_stripe_session']);
+        $request->session()->forget(['register_plan_id', 'register_stripe_session']);
 
         return redirect()->route('user.dashboard')->with('success', 'Registration successful! Welcome to PredictorMT.');
     }
@@ -196,7 +199,7 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return redirect()->route('signin')->with('error', 'Please login to access your dashboard.');
         }
 
@@ -223,6 +226,9 @@ class UserController extends Controller
         $activeAlertsCount = $user->company_id
             ? Alert::where('company_id', $user->company_id)->whereNull('acknowledged_at')->count()
             : 0;
+        $alertsTodayCount = $user->company_id
+            ? Alert::where('company_id', $user->company_id)->whereDate('created_at', today())->count()
+            : 0;
         $healthyMachineCount = $machines->where('status', 'healthy')->count();
         $healthPercent = $machines->isEmpty()
             ? 0
@@ -247,6 +253,21 @@ class UserController extends Controller
         $events = $user->company_id
             ? Alert::with('machine')->where('company_id', $user->company_id)->latest()->limit(8)->get()
             : collect();
+        $upcomingMaintenance = $user->company_id
+            ? MaintenanceTask::with(['machine', 'assignedTo'])
+                ->where('company_id', $user->company_id)
+                ->whereIn('status', ['scheduled', 'in_progress'])
+                ->orderBy('scheduled_at')
+                ->limit(5)
+                ->get()
+            : collect();
+        $latestCompletedMaintenance = $user->company_id
+            ? MaintenanceTask::with('machine')
+                ->where('company_id', $user->company_id)
+                ->where('status', 'completed')
+                ->latest('completed_at')
+                ->first()
+            : null;
 
         // Load recent payments for this user (match by customer email)
         $payments = [];
@@ -255,7 +276,7 @@ class UserController extends Controller
                 $payments = Payment::with('plan')->where('customer_email', $user->email)->orderBy('created_at', 'desc')->get();
             }
         } catch (\Exception $e) {
-            logger()->warning('Payments load error: ' . $e->getMessage());
+            logger()->warning('Payments load error: '.$e->getMessage());
             $payments = collect();
         }
 
@@ -266,7 +287,7 @@ class UserController extends Controller
                 $subscriptions = Subscription::with('plan')->where('company_id', $user->company_id)->orderBy('started_at', 'desc')->get();
             }
         } catch (\Exception $e) {
-            logger()->warning('Subscriptions load error: ' . $e->getMessage());
+            logger()->warning('Subscriptions load error: '.$e->getMessage());
             $subscriptions = collect();
         }
 
@@ -280,9 +301,12 @@ class UserController extends Controller
             'connectedSensorCount',
             'staleSensorCount',
             'activeAlertsCount',
+            'alertsTodayCount',
             'healthPercent',
             'sensorReadings',
-            'events'
+            'events',
+            'upcomingMaintenance',
+            'latestCompletedMaintenance'
         ));
     }
 
@@ -303,7 +327,7 @@ class UserController extends Controller
         $machines = $companyId
             ? Machine::where('company_id', $companyId)->get()
             : collect();
-        $readings = !$companyId
+        $readings = ! $companyId
             ? collect()
             : SensorReading::whereHas('machine', fn ($query) => $query->where('company_id', $companyId))
                 ->whereNotNull('payload')
@@ -365,6 +389,7 @@ class UserController extends Controller
 
         return redirect()->route('home')->with('success', 'You have been logged out successfully.');
     }
+
     /**
      * Handle demo request submission
      */
@@ -379,7 +404,7 @@ class UserController extends Controller
             'preferred_date' => 'required|date',
         ]);
 
-        $demo = new Demo();
+        $demo = new Demo;
         $demo->first_name = $request->first_name;
         $demo->last_name = $request->last_name;
         $demo->email = $request->email;

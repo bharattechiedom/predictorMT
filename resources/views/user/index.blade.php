@@ -4,8 +4,12 @@
 
  @include('user.include.header')
 
+ @php
+     $latestReading = $sensorReadings->last();
+     $latestValues = data_get($latestReading, 'values', []);
+ @endphp
                 
-<main class="main-wrapper">
+ <main class="main-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
@@ -210,7 +214,7 @@
                                     Temperature
                                 </h6>
 
-                                <span class="badge bg-danger">68°C</span>
+                                <span class="badge bg-danger">{{ data_get($latestValues, 'temperature') !== null ? number_format((float) data_get($latestValues, 'temperature'), 1) . '°C' : '—' }}</span>
 
                             </div>
 
@@ -232,7 +236,7 @@
                                                     </h6>
 
                                                     <span class="badge bg-warning text-dark">
-                                                        120 PSI
+                                                        {{ data_get($latestValues, 'pressure') !== null ? number_format((float) data_get($latestValues, 'pressure'), 1) . ' PSI' : '—' }}
                                                     </span>
                                                 </div>
 
@@ -252,7 +256,7 @@
                                                     </h6>
 
                                                     <span class="badge bg-info">
-                                                        2.3 mm/s
+                                                        {{ data_get($latestValues, 'vibration') !== null ? number_format((float) data_get($latestValues, 'vibration'), 2) . ' mm/s' : '—' }}
                                                     </span>
                                                 </div>
 
@@ -272,7 +276,7 @@
                                                     </h6>
 
                                                     <span class="badge bg-success">
-                                                        1450 RPM
+                                                        {{ data_get($latestValues, 'rpm') !== null ? number_format((float) data_get($latestValues, 'rpm')) . ' RPM' : '—' }}
                                                     </span>
                                                 </div>
 
@@ -309,11 +313,11 @@
                                 </div>
 
                                 <h2 class="fw-bold text-success mt-3">
-                                    96%
+                                    {{ $healthPercent }}%
                                 </h2>
 
                                 <span class="badge bg-success px-3 py-2">
-                                    Excellent Condition
+                                    {{ $healthPercent ? 'Healthy machines recorded' : 'No healthy machine status recorded' }}
                                 </span>
 
                             </div>
@@ -335,7 +339,7 @@
                                             </small>
 
                                             <h2 class="fw-bold text-primary mb-0">
-                                                92/100
+                                                {{ $healthPercent }}/100
                                             </h2>
                                         </div>
 
@@ -397,7 +401,7 @@
                                             </small>
 
                                             <h2 class="fw-bold text-danger mb-0">
-                                                05
+                                                {{ $activeAlertsCount }}
                                             </h2>
 
                                         </div>
@@ -498,36 +502,34 @@
 
                                         <tr>
                                             <td><strong>Machine ID</strong></td>
-                                            <td>MTR-1001</td>
+                                            <td>{{ $machines->first()?->serial_number ?? '—' }}</td>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Machine Type</strong></td>
-                                            <td>Industrial Motor</td>
+                                            <td>{{ $machines->first()?->machine_type ?? '—' }}</td>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Location</strong></td>
-                                            <td>Plant A</td>
+                                            <td>{{ $machines->first()?->location ?? '—' }}</td>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Runtime</strong></td>
-                                            <td>3,245 hrs</td>
+                                            <td>—</td>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Health</strong></td>
                                             <td>
-                                                <span class="badge bg-success">
-                                                    Excellent
-                                                </span>
+                                                <span class="badge bg-secondary">{{ ucfirst($machines->first()?->status ?? 'Not recorded') }}</span>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Last Service</strong></td>
-                                            <td>20 Jul 2026</td>
+                                            <td>{{ $latestCompletedMaintenance?->completed_at?->format('M d, Y') ?? '—' }}</td>
                                         </tr>
 
                                     </table>
@@ -564,7 +566,7 @@
                                         <span>Efficiency</span>
 
                                         <strong class="text-success">
-                                            96%
+                                            {{ $healthPercent }}%
                                         </strong>
 
                                     </div>
@@ -572,7 +574,7 @@
                                     <div class="progress mb-3">
 
                                         <div class="progress-bar bg-success"
-                                            style="width:96%">
+                                            style="width:{{ $healthPercent }}%">
                                         </div>
 
                                     </div>
@@ -582,7 +584,7 @@
                                         <span>Availability</span>
 
                                         <strong class="text-primary">
-                                            98%
+                                            {{ $activeSensorCount > 0 ? round($connectedSensorCount / $activeSensorCount * 100) : 0 }}%
                                         </strong>
 
                                     </div>
@@ -590,7 +592,7 @@
                                     <div class="progress mb-3">
 
                                         <div class="progress-bar bg-primary"
-                                            style="width:98%">
+                                            style="width:{{ $activeSensorCount > 0 ? round($connectedSensorCount / $activeSensorCount * 100) : 0 }}%">
                                         </div>
 
                                     </div>
@@ -600,7 +602,7 @@
                                         <span>Reliability</span>
 
                                         <strong class="text-warning">
-                                            94%
+                                            {{ $healthPercent }}%
                                         </strong>
 
                                     </div>
@@ -608,7 +610,7 @@
                                     <div class="progress">
 
                                         <div class="progress-bar bg-warning"
-                                            style="width:94%">
+                                            style="width:{{ $healthPercent }}%">
                                         </div>
 
                                     </div>
@@ -638,24 +640,24 @@
 
                                         <li class="list-group-item d-flex justify-content-between">
                                             Broker
-                                            <span class="badge bg-success">
-                                                Connected
+                                            <span class="badge bg-{{ config('mqtt.enabled') ? 'warning text-dark' : 'secondary' }}">
+                                                {{ config('mqtt.enabled') ? 'Enabled · connection not verified' : 'Disabled' }}
                                             </span>
                                         </li>
 
                                         <li class="list-group-item d-flex justify-content-between">
                                             Publish Rate
-                                            <strong>250 msg/min</strong>
+                                            <strong>{{ config('mqtt.host') }}:{{ config('mqtt.port') }}</strong>
                                         </li>
 
                                         <li class="list-group-item d-flex justify-content-between">
                                             Subscriber
-                                            <strong>08</strong>
+                                            <strong>Not available</strong>
                                         </li>
 
                                         <li class="list-group-item d-flex justify-content-between">
                                             Latency
-                                            <strong>18 ms</strong>
+                                            <strong>Not measured</strong>
                                         </li>
 
                                     </ul>
@@ -683,9 +685,9 @@
 
                                     <div class="d-flex justify-content-between mb-3">
 
-                                        <span>Total Sensors</span>
+                                        <span>Active Sensors</span>
 
-                                        <strong>986</strong>
+                                        <strong>{{ $activeSensorCount }}</strong>
 
                                     </div>
 
@@ -694,7 +696,7 @@
                                         <span>Running Machines</span>
 
                                         <strong class="text-success">
-                                            112
+                                            {{ $runningMachineCount }}
                                         </strong>
 
                                     </div>
@@ -704,7 +706,7 @@
                                         <span>Faults Today</span>
 
                                         <strong class="text-danger">
-                                            05
+                                            {{ $alertsTodayCount }}
                                         </strong>
 
                                     </div>
@@ -714,7 +716,7 @@
                                         <span>Alerts</span>
 
                                         <strong class="text-warning">
-                                            18
+                                            {{ $activeAlertsCount }}
                                         </strong>
 
                                     </div>
@@ -744,7 +746,7 @@
                                     </h5>
 
                                     <span class="badge bg-success">
-                                        128 Machines
+                                        {{ $machines->count() }} Machines
                                     </span>
                                 </div>
 
@@ -752,77 +754,26 @@
 
                                     <div class="row g-3">
 
-                                        <div class="col-md-4">
-                                            <div class="border rounded p-3">
-                                                <div class="d-flex justify-content-between">
-                                                    <strong>Motor 01</strong>
-                                                    <span class="badge bg-success">Running</span>
+                                        @forelse ($machines as $machine)
+                                            @php
+                                                $machineState = data_get($machine->metadata, 'simulation.status', $machine->status ?: 'unknown');
+                                                $machineBadge = in_array($machineState, ['running', 'healthy', 'active']) ? 'success' : (in_array($machineState, ['fault', 'error', 'critical']) ? 'danger' : 'secondary');
+                                            @endphp
+                                            <div class="col-md-4">
+                                                <div class="border rounded p-3">
+                                                    <div class="d-flex justify-content-between">
+                                                        <strong>{{ $machine->name }}</strong>
+                                                        <span class="badge bg-{{ $machineBadge }}">{{ ucfirst($machineState) }}</span>
+                                                    </div>
+                                                    <small class="text-muted">
+                                                        {{ $machine->machine_type ?: 'Machine type not recorded' }}
+                                                        @if($machine->location) · {{ $machine->location }} @endif
+                                                    </small>
                                                 </div>
-                                                <small class="text-muted">
-                                                    <i class="fas fa-temperature-half text-danger"></i> 65°C
-                                                </small>
                                             </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="border rounded p-3">
-                                                <div class="d-flex justify-content-between">
-                                                    <strong>Pump 02</strong>
-                                                    <span class="badge bg-warning text-dark">Idle</span>
-                                                </div>
-                                                <small class="text-muted">
-                                                    <i class="fas fa-gauge-high text-warning"></i> 118 PSI
-                                                </small>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="border rounded p-3">
-                                                <div class="d-flex justify-content-between">
-                                                    <strong>Conveyor 03</strong>
-                                                    <span class="badge bg-danger">Fault</span>
-                                                </div>
-                                                <small class="text-muted">
-                                                    <i class="fas fa-triangle-exclamation text-danger"></i> Overload
-                                                </small>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="border rounded p-3">
-                                                <div class="d-flex justify-content-between">
-                                                    <strong>Generator</strong>
-                                                    <span class="badge bg-info">Maintenance</span>
-                                                </div>
-                                                <small class="text-muted">
-                                                    Scheduled
-                                                </small>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="border rounded p-3">
-                                                <div class="d-flex justify-content-between">
-                                                    <strong>Fan 05</strong>
-                                                    <span class="badge bg-success">Running</span>
-                                                </div>
-                                                <small class="text-muted">
-                                                    1450 RPM
-                                                </small>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="border rounded p-3">
-                                                <div class="d-flex justify-content-between">
-                                                    <strong>Gearbox</strong>
-                                                    <span class="badge bg-success">Running</span>
-                                                </div>
-                                                <small class="text-muted">
-                                                    Healthy
-                                                </small>
-                                            </div>
-                                        </div>
+                                        @empty
+                                            <div class="col-12 text-center text-muted py-3">No machines have been registered.</div>
+                                        @endforelse
 
                                     </div>
 
@@ -846,45 +797,17 @@
 
                                 <div class="list-group list-group-flush">
 
-                                    <div class="list-group-item d-flex justify-content-between">
-                                        <div>
-                                            <i class="fas fa-circle text-danger me-2"></i>
-                                            High Temperature
+                                    @forelse($events->take(5) as $event)
+                                        <div class="list-group-item d-flex justify-content-between">
+                                            <div>
+                                                <i class="fas fa-circle text-{{ $event->acknowledged_at ? 'success' : ($event->level === 'critical' ? 'danger' : 'warning') }} me-2"></i>
+                                                {{ $event->message }}
+                                            </div>
+                                            <small>{{ $event->created_at?->diffForHumans() ?? '—' }}</small>
                                         </div>
-                                        <small>2 min</small>
-                                    </div>
-
-                                    <div class="list-group-item d-flex justify-content-between">
-                                        <div>
-                                            <i class="fas fa-circle text-warning me-2"></i>
-                                            Pressure Drop
-                                        </div>
-                                        <small>5 min</small>
-                                    </div>
-
-                                    <div class="list-group-item d-flex justify-content-between">
-                                        <div>
-                                            <i class="fas fa-circle text-info me-2"></i>
-                                            Bearing Vibration
-                                        </div>
-                                        <small>12 min</small>
-                                    </div>
-
-                                    <div class="list-group-item d-flex justify-content-between">
-                                        <div>
-                                            <i class="fas fa-circle text-success me-2"></i>
-                                            Motor Restarted
-                                        </div>
-                                        <small>18 min</small>
-                                    </div>
-
-                                    <div class="list-group-item d-flex justify-content-between">
-                                        <div>
-                                            <i class="fas fa-circle text-primary me-2"></i>
-                                            MQTT Connected
-                                        </div>
-                                        <small>25 min</small>
-                                    </div>
+                                    @empty
+                                        <div class="list-group-item text-muted">No recent alerts.</div>
+                                    @endforelse
 
                                 </div>
 
@@ -928,33 +851,16 @@
 
                                         <tbody>
 
-                                            <tr>
-                                                <td>10:05</td>
-                                                <td>Motor 01</td>
-                                                <td>Bearing Failure</td>
-                                                <td><span class="badge bg-danger">Critical</span></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>10:20</td>
-                                                <td>Pump 02</td>
-                                                <td>Pressure Leakage</td>
-                                                <td><span class="badge bg-warning text-dark">Warning</span></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>10:40</td>
-                                                <td>Generator</td>
-                                                <td>Power Fluctuation</td>
-                                                <td><span class="badge bg-info">Monitoring</span></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>11:00</td>
-                                                <td>Conveyor</td>
-                                                <td>Recovered</td>
-                                                <td><span class="badge bg-success">Resolved</span></td>
-                                            </tr>
+                                            @forelse($events->take(5) as $event)
+                                                <tr>
+                                                    <td>{{ $event->created_at?->format('M d, H:i') ?? '—' }}</td>
+                                                    <td>{{ $event->machine->name ?? 'Unknown machine' }}</td>
+                                                    <td>{{ $event->message }}</td>
+                                                    <td><span class="badge bg-{{ $event->acknowledged_at ? 'success' : ($event->level === 'critical' ? 'danger' : 'warning text-dark') }}">{{ $event->acknowledged_at ? 'Acknowledged' : ucfirst($event->level) }}</span></td>
+                                                </tr>
+                                            @empty
+                                                <tr><td colspan="4" class="text-center text-muted">No fault events recorded.</td></tr>
+                                            @endforelse
 
                                         </tbody>
 
@@ -980,25 +886,14 @@
 
                                 <div class="list-group list-group-flush">
 
-                                    <div class="list-group-item d-flex justify-content-between">
-                                        <span>Motor 01</span>
-                                        <span class="badge bg-primary">Today</span>
-                                    </div>
-
-                                    <div class="list-group-item d-flex justify-content-between">
-                                        <span>Pump 02</span>
-                                        <span class="badge bg-warning text-dark">Tomorrow</span>
-                                    </div>
-
-                                    <div class="list-group-item d-flex justify-content-between">
-                                        <span>Generator</span>
-                                        <span class="badge bg-info">2 Aug</span>
-                                    </div>
-
-                                    <div class="list-group-item d-flex justify-content-between">
-                                        <span>Gearbox</span>
-                                        <span class="badge bg-success">5 Aug</span>
-                                    </div>
+                                    @forelse($upcomingMaintenance as $task)
+                                        <div class="list-group-item d-flex justify-content-between">
+                                            <span>{{ $task->machine->name ?? 'Machine' }}</span>
+                                            <span class="badge bg-{{ $task->status === 'in_progress' ? 'warning text-dark' : 'primary' }}">{{ $task->scheduled_at?->format('M d') ?? ucfirst(str_replace('_', ' ', $task->status)) }}</span>
+                                        </div>
+                                    @empty
+                                        <div class="list-group-item text-muted">No upcoming maintenance tasks.</div>
+                                    @endforelse
 
                                 </div>
 

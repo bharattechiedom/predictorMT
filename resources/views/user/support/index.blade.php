@@ -25,26 +25,28 @@ $page_title = "Support";
           </div>
 
           <!-- Filters Row -->
+          <form method="GET" action="{{ route('user.support.index') }}">
           <div class="container-fluid mt-3 mb-4">
             <div class="row align-items-center">
               <div class="col-lg-8 col-md-12">
                 <div class="row g-3">
                   <div class="col-lg-4 col-md-6">
-                    <input type="text" class="form-control" placeholder="Search Ticket ID">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Search Ticket ID or subject">
                   </div>
                   <div class="col-lg-4 col-md-6">
-                    <select class="form-select">
-                      <option selected="">Select Category</option>
-                      <option>Technical</option>
-                      <option>Billing</option>
-                      <option>Account</option>
-                      <option>Other</option>
+                    <select name="status" class="form-select">
+                      <option value="">All statuses</option>
+                      @foreach(['open', 'pending', 'resolved', 'closed'] as $status)
+                        <option value="{{ $status }}" {{ request('status') === $status ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
+                      @endforeach
                     </select>
                   </div>
+                  <div class="col-12"><button class="btn btn-outline-dark" type="submit">Apply Filters</button></div>
                 </div>
               </div>
             </div>
           </div>
+          </form>
 
           <!-- Main Content -->
           <div class="col-md-12">
@@ -90,6 +92,7 @@ $page_title = "Support";
                     @endforelse
                   </tbody>
                 </table>
+                <div class="mt-3">{{ $tickets->links() }}</div>
               </div>
             </div>
 
@@ -99,13 +102,7 @@ $page_title = "Support";
                 <h5 class="mb-0"><i class="bi bi-journal-text me-2"></i>Documentation</h5>
               </div>
               <div class="card-body">
-                <p class="text-white mb-2">Browse our guides and FAQs to resolve common issues:</p>
-                <ul class="list-unstyled mb-0">
-                  <li><a href="#" class="text-decoration-none text-white"><i class="bi bi-file-earmark-text me-2"></i>How to reset your password</a></li>
-                  <li><a href="#" class="text-decoration-none text-white"><i class="bi bi-file-earmark-text me-2"></i>Understanding billing and invoices</a></li>
-                  <li><a href="#" class="text-decoration-none text-white"><i class="bi bi-file-earmark-text me-2"></i>Integrating APIs securely</a></li>
-                  <li><a href="#" class="text-decoration-none text-white"><i class="bi bi-file-earmark-text me-2"></i>How to update your profile</a></li>
-                </ul>
+                <p class="text-white mb-0">Help articles are not configured yet. If you need assistance, create a support ticket and the team can follow up.</p>
               </div>
             </div>
 

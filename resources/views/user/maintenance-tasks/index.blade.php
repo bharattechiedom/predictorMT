@@ -63,7 +63,7 @@
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
                                             <p class="text-muted small mb-2">Active Faults</p>
-                                            <h3 class="fw-bold text-danger mb-0">08</h3>
+                                            <h3 class="fw-bold text-danger mb-0">{{ $stats['activeFaults'] }}</h3>
                                         </div>
                                         <i class="fa-solid fa-triangle-exclamation fs-3 text-danger"></i>
                                     </div>
@@ -77,7 +77,7 @@
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
                                             <p class="text-muted small mb-2">Critical</p>
-                                            <h3 class="fw-bold text-warning mb-0">02</h3>
+                                            <h3 class="fw-bold text-warning mb-0">{{ $stats['criticalFaults'] }}</h3>
                                         </div>
                                         <i class="fa-solid fa-radiation fs-3 text-warning"></i>
                                     </div>
@@ -91,7 +91,7 @@
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
                                             <p class="text-muted small mb-2">Scheduled</p>
-                                            <h3 class="fw-bold text-primary mb-0">05</h3>
+                                            <h3 class="fw-bold text-primary mb-0">{{ $stats['scheduledTasks'] }}</h3>
                                         </div>
                                         <i class="fa-regular fa-calendar-check fs-3 text-primary"></i>
                                     </div>
@@ -105,7 +105,7 @@
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
                                             <p class="text-muted small mb-2">Resolved</p>
-                                            <h3 class="fw-bold text-success mb-0">12</h3>
+                                            <h3 class="fw-bold text-success mb-0">{{ $stats['resolvedTasks'] }}</h3>
                                         </div>
                                         <i class="fa-solid fa-circle-check fs-3 text-success"></i>
                                     </div>
@@ -119,7 +119,7 @@
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
                                             <p class="text-muted small mb-2">MTTR</p>
-                                            <h3 class="fw-bold text-info mb-0">2.5h</h3>
+                                            <h3 class="fw-bold text-info mb-0">—</h3>
                                         </div>
                                         <i class="fa-solid fa-stopwatch fs-3 text-info"></i>
                                     </div>
@@ -133,7 +133,7 @@
                                     <div class="d-flex justify-content-between align-items-start gap-2">
                                         <div>
                                             <p class="text-muted small mb-2">Machine Health</p>
-                                            <h3 class="fw-bold text-success mb-0">96%</h3>
+                                            <h3 class="fw-bold text-success mb-0">{{ $stats['machineHealth'] }}%</h3>
                                         </div>
                                         <i class="fa-solid fa-heart-pulse fs-3 text-success"></i>
                                     </div>
@@ -170,62 +170,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="ps-3">Motor-01</td>
-                                                    <td>Bearing Failure</td>
-                                                    <td><span class="badge bg-danger">Critical</span></td>
-                                                    <td>10:20 AM</td>
-                                                    <td><span class="badge bg-danger">Active</span></td>
-                                                    <td>John</td>
-                                                    <td class="pe-3">
-                                                        <button type="button" class="btn btn-sm btn-outline-primary"
-                                                                onclick="showMaintenanceInfo('Motor-01', 'Bearing Failure', 'Critical')">
-                                                            View
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="ps-3">Pump-01</td>
-                                                    <td>Pressure Leakage</td>
-                                                    <td><span class="badge bg-warning text-dark">High</span></td>
-                                                    <td>09:45 AM</td>
-                                                    <td><span class="badge bg-warning text-dark">Monitoring</span></td>
-                                                    <td>Alex</td>
-                                                    <td class="pe-3">
-                                                        <button type="button" class="btn btn-sm btn-outline-primary"
-                                                                onclick="showMaintenanceInfo('Pump-01', 'Pressure Leakage', 'High')">
-                                                            View
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="ps-3">Fan-01</td>
-                                                    <td>High Vibration</td>
-                                                    <td><span class="badge bg-info text-dark">Medium</span></td>
-                                                    <td>08:30 AM</td>
-                                                    <td><span class="badge bg-info text-dark">Pending</span></td>
-                                                    <td>Mike</td>
-                                                    <td class="pe-3">
-                                                        <button type="button" class="btn btn-sm btn-outline-primary"
-                                                                onclick="showMaintenanceInfo('Fan-01', 'High Vibration', 'Medium')">
-                                                            View
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="ps-3">Generator-01</td>
-                                                    <td>Motor Overheating</td>
-                                                    <td><span class="badge bg-danger">Critical</span></td>
-                                                    <td>11:05 AM</td>
-                                                    <td><span class="badge bg-danger">Active</span></td>
-                                                    <td>David</td>
-                                                    <td class="pe-3">
-                                                        <button type="button" class="btn btn-sm btn-outline-primary"
-                                                                onclick="showMaintenanceInfo('Generator-01', 'Motor Overheating', 'Critical')">
-                                                            View
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                @forelse ($activeAlerts as $alert)
+                                                    <tr>
+                                                        <td class="ps-3">{{ $alert->machine->name ?? '—' }}</td>
+                                                        <td>{{ $alert->message }}</td>
+                                                        <td><span class="badge bg-{{ $alert->level === 'critical' ? 'danger' : ($alert->level === 'high' ? 'warning text-dark' : 'info text-dark') }}">{{ ucfirst($alert->level) }}</span></td>
+                                                        <td>{{ $alert->created_at->format('M d, H:i') }}</td>
+                                                        <td><span class="badge bg-warning text-dark">Unacknowledged</span></td>
+                                                        <td>—</td>
+                                                        <td class="pe-3">—</td>
+                                                    </tr>
+                                                @empty
+                                                    <tr><td colspan="7" class="text-center py-3">No active alerts found.</td></tr>
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
@@ -275,62 +232,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="ps-3">Motor-01</td>
-                                            <td>Preventive</td>
-                                            <td>John Smith</td>
-                                            <td>02 Aug 2026</td>
-                                            <td><span class="badge bg-danger">High</span></td>
-                                            <td><span class="badge bg-warning text-dark">Scheduled</span></td>
-                                            <td class="pe-3">
-                                                <button type="button" class="btn btn-sm btn-outline-primary"
-                                                        onclick="showMaintenanceInfo('Motor-01', 'Preventive Maintenance', 'High')">
-                                                    View
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-3">Pump-02</td>
-                                            <td>Inspection</td>
-                                            <td>Alex</td>
-                                            <td>04 Aug 2026</td>
-                                            <td><span class="badge bg-info text-dark">Medium</span></td>
-                                            <td><span class="badge bg-success">Planned</span></td>
-                                            <td class="pe-3">
-                                                <button type="button" class="btn btn-sm btn-outline-primary"
-                                                        onclick="showMaintenanceInfo('Pump-02', 'Inspection', 'Medium')">
-                                                    View
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-3">Fan-01</td>
-                                            <td>Corrective</td>
-                                            <td>David</td>
-                                            <td>Today</td>
-                                            <td><span class="badge bg-danger">Critical</span></td>
-                                            <td><span class="badge bg-danger">In Progress</span></td>
-                                            <td class="pe-3">
-                                                <button type="button" class="btn btn-sm btn-outline-success"
-                                                        onclick="showMaintenanceInfo('Fan-01', 'Corrective Maintenance', 'Critical')">
-                                                    View
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-3">Generator-01</td>
-                                            <td>Oil Change</td>
-                                            <td>Mike</td>
-                                            <td>08 Aug 2026</td>
-                                            <td><span class="badge bg-secondary">Low</span></td>
-                                            <td><span class="badge bg-primary">Pending</span></td>
-                                            <td class="pe-3">
-                                                <button type="button" class="btn btn-sm btn-outline-primary"
-                                                        onclick="showMaintenanceInfo('Generator-01', 'Oil Change', 'Low')">
-                                                    View
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        @forelse ($upcomingTasks as $task)
+                                            <tr>
+                                                <td class="ps-3">{{ $task->machine->name ?? '—' }}</td>
+                                                <td>{{ \Illuminate\Support\Str::limit($task->notes ?: 'Maintenance', 40) }}</td>
+                                                <td>{{ $task->assignedTo->name ?? 'Unassigned' }}</td>
+                                                <td>{{ $task->scheduled_at?->format('M d, Y') ?? '—' }}</td>
+                                                <td>—</td>
+                                                <td><span class="badge bg-{{ $task->status === 'in_progress' ? 'warning text-dark' : 'primary' }}">{{ ucfirst(str_replace('_', ' ', $task->status)) }}</span></td>
+                                                <td class="pe-3"><a class="btn btn-sm btn-outline-primary" href="{{ route('user.maintenance-tasks.show', $task) }}">View</a></td>
+                                            </tr>
+                                        @empty
+                                            <tr><td colspan="7" class="text-center py-3">No scheduled maintenance tasks.</td></tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -347,32 +261,28 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="alert alert-warning">
-                                <div class="fw-bold mb-1">
-                                    <i class="fa-solid fa-triangle-exclamation me-1"></i>
-                                    Motor-01
+                            @forelse ($recommendations as $prediction)
+                                <div class="alert alert-warning">
+                                    <div class="fw-bold mb-1">
+                                        <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                                        {{ $prediction->machine->name ?? 'Machine' }}
+                                    </div>
+                                    {{ $prediction->component ?: 'Failure risk' }} prediction:
+                                    <strong>{{ number_format((float) $prediction->probability * 100, 1) }}%</strong>
+                                    @if ($prediction->predicted_failure_at)
+                                        · Predicted date: {{ $prediction->predicted_failure_at->format('M d, Y') }}
+                                    @endif
                                 </div>
-                                Bearing wear detected. Replace bearing within <strong>5 days</strong>.
-                            </div>
+                            @empty
+                                <p class="text-muted">No open predictions are available for maintenance recommendations.</p>
+                            @endforelse
 
                             <div class="table-responsive">
                                 <table class="table table-borderless align-middle mb-3">
                                     <tbody>
                                         <tr>
-                                            <th class="text-muted">Health Score</th>
-                                            <td><span class="badge bg-success">92%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-muted">Failure Risk</th>
-                                            <td><span class="badge bg-danger">18%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-muted">Confidence</th>
-                                            <td>98%</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-muted">Remaining Life</th>
-                                            <td>120 Days</td>
+                                            <th class="text-muted">Open Predictions</th>
+                                            <td>{{ $recommendations->count() }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -409,33 +319,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="ps-3">31 Jul 2026</td>
-                                            <td>Motor-01</td>
-                                            <td>Bearing Failure</td>
-                                            <td>Bearing Replaced</td>
-                                            <td>John</td>
-                                            <td>2h 15m</td>
-                                            <td class="pe-3"><span class="badge bg-success">Completed</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-3">30 Jul 2026</td>
-                                            <td>Pump-02</td>
-                                            <td>Pressure Leakage</td>
-                                            <td>Valve Changed</td>
-                                            <td>Alex</td>
-                                            <td>1h 20m</td>
-                                            <td class="pe-3"><span class="badge bg-success">Completed</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-3">29 Jul 2026</td>
-                                            <td>Generator-01</td>
-                                            <td>Power Failure</td>
-                                            <td>Power Reset</td>
-                                            <td>David</td>
-                                            <td>45 Min</td>
-                                            <td class="pe-3"><span class="badge bg-primary">Verified</span></td>
-                                        </tr>
+                                        @forelse ($completedTasks as $task)
+                                            <tr>
+                                                <td class="ps-3">{{ $task->completed_at?->format('M d, Y') ?? '—' }}</td>
+                                                <td>{{ $task->machine->name ?? '—' }}</td>
+                                                <td>—</td>
+                                                <td>{{ $task->notes ?: 'Maintenance completed' }}</td>
+                                                <td>{{ $task->assignedTo->name ?? '—' }}</td>
+                                                <td>—</td>
+                                                <td class="pe-3"><span class="badge bg-success">Completed</span></td>
+                                            </tr>
+                                        @empty
+                                            <tr><td colspan="7" class="text-center py-3">No completed maintenance tasks yet.</td></tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -681,9 +577,9 @@ document.addEventListener('DOMContentLoaded', function () {
         new Chart(chartElement, {
             type: 'doughnut',
             data: {
-                labels: ['Critical', 'High', 'Medium', 'Low'],
+                labels: @json($faultCounts->keys()->map(fn ($level) => ucfirst($level))->values()),
                 datasets: [{
-                    data: [2, 3, 4, 6],
+                    data: @json($faultCounts->values()),
                     backgroundColor: ['#dc3545', '#fd7e14', '#0dcaf0', '#198754'],
                     borderWidth: 0,
                     hoverOffset: 5
@@ -707,7 +603,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Demo fault details: shows the selected row's information.
 function showMaintenanceInfo(machine, fault, severity) {
     alert(
         'Machine: ' + machine +

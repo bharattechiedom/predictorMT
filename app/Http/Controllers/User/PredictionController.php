@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Prediction;
-use App\Models\Machine;
 use App\Models\MaintenanceTask;
+use App\Models\Prediction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,12 +12,32 @@ class PredictionController extends Controller
 {
     public function index()
     {
-        $predictions = Prediction::whereHas('machine', function($query) {
-            $query->where('company_id', Auth::user()->company_id);
-        })->with(['machine', 'sensor'])
+        $companyId = Auth::user()->company_id;
+        $predictionQuery = Prediction::whereHas('machine', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        });
+        $predictions = (clone $predictionQuery)->with(['machine', 'sensor'])
             ->latest()
-            ->paginate(10);
-        return view('user.predictions.index', compact('predictions'));
+            ->paginate(10)
+            ->withQueryString();
+        $chartPredictions = (clone $predictionQuery)->latest('predicted_at')->limit(7)->get()->reverse()->values();
+        $highestRiskPrediction = (clone $predictionQuery)->with('machine')->orderByDesc('probability')->first();
+        $riskPredictions = (clone $predictionQuery)->with('machine')->orderByDesc('probability')->limit(5)->get();
+        $openPredictionCount = (clone $predictionQuery)->whereIn('status', ['open', 'acknowledged'])->count();
+        $averageProbability = round((float) ((clone $predictionQuery)->avg('probability') ?? 0) * 100, 1);
+        $predictionCount = (clone $predictionQuery)->count();
+        $scheduledMaintenanceCount = MaintenanceTask::where('company_id', $companyId)->whereIn('status', ['scheduled', 'in_progress'])->count();
+
+        return view('user.predictions.index', compact(
+            'predictions',
+            'chartPredictions',
+            'highestRiskPrediction',
+            'riskPredictions',
+            'openPredictionCount',
+            'averageProbability',
+            'predictionCount',
+            'scheduledMaintenanceCount'
+        ));
     }
 
     public function show(Prediction $prediction)
@@ -26,6 +45,7 @@ class PredictionController extends Controller
         if ($prediction->machine->company_id !== Auth::user()->company_id) {
             abort(403);
         }
+
         return view('user.predictions.show', compact('prediction'));
     }
 
@@ -37,7 +57,7 @@ class PredictionController extends Controller
 
         if ($prediction->status === 'open') {
             $prediction->update([
-                'status' => 'acknowledged'
+                'status' => 'acknowledged',
             ]);
         }
 
@@ -65,12 +85,12 @@ class PredictionController extends Controller
             'assigned_to' => $validated['assigned_to'] ?? null,
             'scheduled_at' => $validated['scheduled_at'],
             'status' => 'scheduled',
-            'notes' => $validated['notes'] ?? "Created from prediction #" . $prediction->id,
+            'notes' => $validated['notes'] ?? 'Created from prediction #'.$prediction->id,
         ]);
 
         // Update prediction status
         $prediction->update([
-            'status' => 'converted'
+            'status' => 'converted',
         ]);
 
         return redirect()->route('user.maintenance-tasks.show', $task)
@@ -85,7 +105,7 @@ class PredictionController extends Controller
 
         if (in_array($prediction->status, ['open', 'acknowledged'])) {
             $prediction->update([
-                'status' => 'resolved'
+                'status' => 'resolved',
             ]);
         }
 
