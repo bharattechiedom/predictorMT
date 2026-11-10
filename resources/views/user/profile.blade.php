@@ -20,7 +20,7 @@
                 <div class="page-content m-auto p-3 mt-5">
 
                     {{-- Page Header --}}
-                    <div class="mb-4">
+                    <div class="mb-2">
                         <h3 class="fw-bold mb-1">Profile & Settings</h3>
                         <p class="text-muted mb-0">
                             Manage your personal information and account preferences.
@@ -64,7 +64,7 @@
 
                         {{-- Profile Card --}}
                         <div class="col-lg-3">
-                            <div class="card border-0 shadow-none h-100">
+                            <div class="card border-0 shadow-none h-100 bg-light">
                                 <div class="card-body text-center p-4">
 
                                     <div class="mb-3">
@@ -123,8 +123,8 @@
                         <div class="col-lg-9">
                             <div class="card border-0 shadow-none">
 
-                                <div class="card-header bg-white p-0 pt-2">
-                                    <ul class="nav nav-tabs card-header-tabs flex-nowrap overflow-auto"
+                                <div class="card-header bg-white ms-3">
+                                    <ul class="nav nav-tabs card-header-tabs flex-nowrap overflow-hidden border-bottom"
                                         id="profileTabs"
                                         role="tablist">
 
@@ -173,7 +173,7 @@
                                     </ul>
                                 </div>
 
-                                <div class="card-body p-3 p-md-4">
+                                <div class="card-body p-3 p-md-4 px-0">
 
                                     <div class="tab-content">
 
