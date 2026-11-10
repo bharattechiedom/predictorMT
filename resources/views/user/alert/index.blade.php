@@ -26,29 +26,31 @@ $page_title = "Alerts & Notifications";
           </div>
 
           <!-- Filters -->
+          <form method="GET" action="{{ route('user.alerts.index') }}">
           <div class="container-fluid mt-3 mb-4">
             <div class="row align-items-center">
               <div class="col-lg-8 col-md-12">
                 <div class="row g-3">
                   <div class="col-lg-4 col-md-6">
-                    <input type="text" class="form-control" placeholder="Alert ID">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Alert ID or message">
                   </div>
                   <div class="col-lg-4 col-md-6">
-                    <input type="date" class="form-control">
+                    <input type="date" name="date" value="{{ request('date') }}" class="form-control">
                   </div>
                   <div class="col-lg-4 col-md-6">
-                    <select class="form-select">
-                      <option selected="">Select Severity</option>
-                      <option>Critical</option>
-                      <option>High</option>
-                      <option>Medium</option>
-                      <option>Low</option>
+                    <select name="severity" class="form-select">
+                      <option value="">All Severities</option>
+                      @foreach(['critical' => 'Critical', 'warning' => 'Warning', 'info' => 'Info'] as $value => $label)
+                        <option value="{{ $value }}" {{ request('severity') === $value ? 'selected' : '' }}>{{ $label }}</option>
+                      @endforeach
                     </select>
                   </div>
+                  <div class="col-12"><button class="btn btn-outline-dark" type="submit">Apply Filters</button></div>
                 </div>
               </div>
             </div>
           </div>
+          </form>
 
           <!-- Notifications Section -->
           <div class="col-md-12">
@@ -88,6 +90,7 @@ $page_title = "Alerts & Notifications";
                 @else
                 <p class="text-center">No alerts found.</p>
                 @endif
+                <div class="mt-3">{{ $alerts->links() }}</div>
               </div>
             </div>
 
@@ -99,10 +102,9 @@ $page_title = "Alerts & Notifications";
               <div class="card-body text-white">
                 <p>Overview of current system alerts by severity level:</p>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">🔴 <strong>Critical:</strong> 2 active issues — immediate attention required</li>
-                  <li class="list-group-item">🟠 <strong>High:</strong> 3 pending investigations</li>
-                  <li class="list-group-item">🟡 <strong>Medium:</strong> 5 alerts under observation</li>
-                  <li class="list-group-item">🟢 <strong>Low:</strong> 4 reminders and scheduled checks</li>
+                  <li class="list-group-item">🔴 <strong>Critical:</strong> {{ $severityCounts->get('critical', 0) }} active issues</li>
+                  <li class="list-group-item">🟠 <strong>Warning:</strong> {{ $severityCounts->get('warning', 0) }} active issues</li>
+                  <li class="list-group-item">🔵 <strong>Info:</strong> {{ $severityCounts->get('info', 0) }} active issues</li>
                 </ul>
               </div>
             </div>

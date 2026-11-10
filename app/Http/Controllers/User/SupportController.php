@@ -9,18 +9,32 @@ use Illuminate\Support\Facades\Auth;
 
 class SupportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tickets = Ticket::where('company_id', Auth::user()->company_id)
-            ->with('user')
-            ->latest()
-            ->paginate(15);
+        $query = Ticket::where('company_id', Auth::user()->company_id)->with('user');
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($ticketQuery) use ($search) {
+                $ticketQuery->where('subject', 'like', '%'.$search.'%')
+                    ->orWhere('id', $search);
+            });
+        }
+        if ($request->filled('status') && in_array($request->input('status'), ['open', 'pending', 'resolved', 'closed'], true)) {
+            $query->where('status', $request->input('status'));
+        }
+
+        $tickets = $query->latest()->paginate(15)->withQueryString();
+
         return view('user.support.index', compact('tickets'));
     }
 
     public function show(Ticket $ticket)
     {
-        if ($ticket->company_id !== Auth::user()->company_id) abort(403);
+        if ($ticket->company_id !== Auth::user()->company_id) {
+            abort(403);
+        }
+
         return view('user.support.show', compact('ticket'));
     }
 
@@ -47,8 +61,11 @@ class SupportController extends Controller
 
     public function destroy(Ticket $ticket)
     {
-        if ($ticket->company_id !== Auth::user()->company_id) abort(403);
+        if ($ticket->company_id !== Auth::user()->company_id) {
+            abort(403);
+        }
         $ticket->delete();
+
         return redirect()->route('user.support.index')->with('success', 'Ticket deleted');
     }
 }

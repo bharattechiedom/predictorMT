@@ -22,7 +22,7 @@
                         <div>
                             <h3 class="fw-bold mb-1">AI Prediction Dashboard</h3>
                             <p class="text-muted mb-0">
-                                Predict machine failures and maintenance using AI models.
+                                Review failure predictions recorded for your machines.
                             </p>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                                     <div class="d-flex justify-content-between align-items-center gap-3">
                                         <div>
                                             <p class="text-muted mb-1">AI Predictions</p>
-                                            <h3 class="fw-bold text-primary mb-0">254</h3>
+                                            <h3 class="fw-bold text-primary mb-0">{{ $predictionCount }}</h3>
                                         </div>
                                         <i class="fa-solid fa-brain fs-2 text-primary"></i>
                                     </div>
@@ -49,8 +49,8 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center gap-3">
                                         <div>
-                                            <p class="text-muted mb-1">Failure Risk</p>
-                                            <h3 class="fw-bold text-danger mb-0">18%</h3>
+                                            <p class="text-muted mb-1">Average Failure Risk</p>
+                                            <h3 class="fw-bold text-danger mb-0">{{ $averageProbability }}%</h3>
                                         </div>
                                         <i class="fa-solid fa-triangle-exclamation fs-2 text-danger"></i>
                                     </div>
@@ -64,7 +64,7 @@
                                     <div class="d-flex justify-content-between align-items-center gap-3">
                                         <div>
                                             <p class="text-muted mb-1">Predictive Maintenance</p>
-                                            <h3 class="fw-bold text-success mb-0">12</h3>
+                                            <h3 class="fw-bold text-success mb-0">{{ $scheduledMaintenanceCount }}</h3>
                                         </div>
                                         <i class="fa-solid fa-screwdriver-wrench fs-2 text-success"></i>
                                     </div>
@@ -77,8 +77,8 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center gap-3">
                                         <div>
-                                            <p class="text-muted mb-1">Average RUL</p>
-                                            <h3 class="fw-bold text-warning mb-0">120 Days</h3>
+                                            <p class="text-muted mb-1">Open Predictions</p>
+                                            <h3 class="fw-bold text-warning mb-0">{{ $openPredictionCount }}</h3>
                                         </div>
                                         <i class="fa-solid fa-hourglass-half fs-2 text-warning"></i>
                                     </div>
@@ -107,34 +107,24 @@
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Machine</th>
-                                                    <th>Health</th>
+                                                    <th>Predicted Failure</th>
                                                     <th>Failure Probability</th>
-                                                    <th>Confidence</th>
-                                                    <th>Prediction</th>
+                                                    <th>Model Version</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>Motor-01</td>
-                                                    <td><span class="badge bg-success">96%</span></td>
-                                                    <td>5%</td>
-                                                    <td>99%</td>
-                                                    <td><span class="badge bg-success">Healthy</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Pump-02</td>
-                                                    <td><span class="badge bg-warning text-dark">82%</span></td>
-                                                    <td>25%</td>
-                                                    <td>96%</td>
-                                                    <td><span class="badge bg-warning text-dark">Monitor</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Fan-01</td>
-                                                    <td><span class="badge bg-danger">65%</span></td>
-                                                    <td>72%</td>
-                                                    <td>98%</td>
-                                                    <td><span class="badge bg-danger">Failure Likely</span></td>
-                                                </tr>
+                                                @forelse($predictions as $prediction)
+                                                    <tr>
+                                                        <td>{{ $prediction->machine->name ?? '—' }}</td>
+                                                        <td>{{ $prediction->predicted_failure_at?->format('M d, Y') ?? 'Not recorded' }}</td>
+                                                        <td>{{ number_format((float) $prediction->probability * 100, 1) }}%</td>
+                                                        <td>{{ $prediction->model_version ?: 'Not recorded' }}</td>
+                                                        <td><span class="badge bg-{{ $prediction->status === 'resolved' ? 'success' : ($prediction->status === 'open' ? 'warning text-dark' : 'secondary') }}">{{ ucfirst($prediction->status) }}</span></td>
+                                                    </tr>
+                                                @empty
+                                                    <tr><td colspan="5" class="text-center">No predictions have been recorded.</td></tr>
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
@@ -158,35 +148,35 @@
                                             <tbody>
                                                 <tr>
                                                     <th>Machine</th>
-                                                    <td>Motor-01</td>
+                                                    <td>{{ $highestRiskPrediction?->machine?->name ?? '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Recommendation</th>
-                                                    <td>Replace Bearing</td>
+                                                    <td>{{ $highestRiskPrediction?->component ?: 'No prediction available' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Priority</th>
-                                                    <td><span class="badge bg-danger">High</span></td>
+                                                    <td>{{ $highestRiskPrediction ? number_format((float) $highestRiskPrediction->probability * 100, 1) . '%' : '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Due</th>
-                                                    <td>Within 5 Days</td>
+                                                    <td>{{ $highestRiskPrediction?->predicted_failure_at?->format('M d, Y') ?? 'Not recorded' }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
 
-                                    <button type="button" class="btn theme-btn w-100">
+                                    <a href="{{ route('user.maintenance-tasks.create') }}" class="btn theme-btn w-100">
                                         <i class="fa-solid fa-calendar-check me-1"></i>
                                         Schedule Maintenance
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
                     </div>
 
-                    {{-- Failure Prediction Chart and RUL --}}
+                    {{-- Failure Prediction Trend and Predicted Date --}}
                     <div class="row g-3 mb-4">
 
                         <div class="col-lg-8">
@@ -209,13 +199,13 @@
                                 <div class="card-header p-0 mt-2">
                                     <h5 class="fw-bold mb-0">
                                         <i class="fa-solid fa-hourglass-half me-2"></i>
-                                        Remaining Useful Life
+                                        Predicted Failure Date
                                     </h5>
                                 </div>
 
                                 <div class="card-body text-center mt-3">
-                                    <h2 class="display-4 fw-bold text-success mb-1">120</h2>
-                                    <p class="text-muted mb-3">Days Remaining</p>
+                                    <h2 class="display-4 fw-bold text-success mb-1">{{ $highestRiskPrediction?->predicted_failure_at?->format('M d') ?? '—' }}</h2>
+                                    <p class="text-muted mb-3">Date stored with highest-risk prediction</p>
 
                                     <hr>
 
@@ -224,15 +214,15 @@
                                             <tbody>
                                                 <tr>
                                                     <th>Machine</th>
-                                                    <td>Motor-01</td>
+                                                    <td>{{ $highestRiskPrediction?->machine?->name ?? '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Health</th>
-                                                    <td>96%</td>
+                                                    <td>{{ $highestRiskPrediction ? number_format((float) $highestRiskPrediction->probability * 100, 1) . '%' : '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Confidence</th>
-                                                    <td>98%</td>
+                                                    <td>{{ $highestRiskPrediction?->model_version ?: 'Not recorded' }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -259,10 +249,8 @@
                                 <div class="card-body text-center mt-3">
                                     <div id="failureGauge" style="height: 250px;"></div>
 
-                                    <h3 class="fw-bold text-danger mb-2">28%</h3>
-                                    <span class="badge bg-warning text-dark px-3 py-2">
-                                        Medium Risk
-                                    </span>
+                                    <h3 class="fw-bold text-danger mb-2">{{ $highestRiskPrediction ? number_format((float) $highestRiskPrediction->probability * 100, 1) . '%' : '—' }}</h3>
+                                    <span class="badge bg-warning text-dark px-3 py-2">{{ $highestRiskPrediction ? 'Highest Recorded Risk' : 'No Prediction' }}</span>
 
                                     <hr>
 
@@ -271,15 +259,15 @@
                                             <tbody>
                                                 <tr>
                                                     <th>Machine</th>
-                                                    <td>Motor-01</td>
+                                                    <td>{{ $highestRiskPrediction?->machine?->name ?? '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Status</th>
-                                                    <td><span class="badge bg-success">Running</span></td>
+                                                    <td><span class="badge bg-secondary">{{ ucfirst($highestRiskPrediction?->status ?? 'N/A') }}</span></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Next Review</th>
-                                                    <td>Today 05:00 PM</td>
+                                                    <td>{{ $highestRiskPrediction?->predicted_at?->format('M d, Y H:i') ?? '—' }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -294,41 +282,33 @@
                                 <div class="card-header p-0 mt-2">
                                     <h5 class="fw-bold mb-0">
                                         <i class="fa-solid fa-brain me-2"></i>
-                                        AI Confidence Score
+                                        Prediction Model
                                     </h5>
                                 </div>
 
                                 <div class="card-body text-center mt-3">
-                                    <div class="display-2 fw-bold text-success">98%</div>
+                                    <div class="display-2 fw-bold text-success">{{ $highestRiskPrediction?->model_version ?: '—' }}</div>
 
                                     <p class="text-muted">
-                                        AI model confidence for current prediction
+                                        Confidence data is not stored for these predictions.
                                     </p>
 
-                                    <div class="progress mb-4" style="height: 12px;">
-                                        <div class="progress-bar bg-success"
-                                             role="progressbar"
-                                             style="width: 98%;"
-                                             aria-valuenow="98"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100">
-                                        </div>
-                                    </div>
+                                    <div class="progress mb-4" style="height: 12px;"><div class="progress-bar bg-secondary" role="progressbar" style="width: 0%;"></div></div>
 
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-sm text-start mb-0">
                                             <tbody>
                                                 <tr>
                                                     <th>Model</th>
-                                                    <td>LSTM v2.1</td>
+                                                    <td>{{ $highestRiskPrediction?->model_version ?: 'Not recorded' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Dataset</th>
-                                                    <td>120K Records</td>
+                                                    <td>{{ number_format($predictionCount) }} predictions</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Last Trained</th>
-                                                    <td>29 Jul 2026</td>
+                                                    <td>{{ $highestRiskPrediction?->predicted_at?->format('M d, Y') ?? 'Not recorded' }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -357,29 +337,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>Motor-01</td>
-                                                    <td><span class="badge bg-success">Low</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Pump-02</td>
-                                                    <td><span class="badge bg-warning text-dark">Medium</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Fan-01</td>
-                                                    <td><span class="badge bg-danger">High</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Generator-01</td>
-                                                    <td><span class="badge bg-primary">Stable</span></td>
-                                                </tr>
+                                                @forelse($riskPredictions as $prediction)
+                                                    <tr>
+                                                        <td>{{ $prediction->machine->name ?? '—' }}</td>
+                                                        <td><span class="badge bg-{{ $prediction->probability >= 0.7 ? 'danger' : ($prediction->probability >= 0.3 ? 'warning text-dark' : 'success') }}">{{ number_format((float) $prediction->probability * 100, 1) }}%</span></td>
+                                                    </tr>
+                                                @empty
+                                                    <tr><td colspan="2">No risk data available.</td></tr>
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
 
-                                    <button type="button" class="btn btn-outline-primary w-100">
-                                        View Complete Risk Analysis
-                                    </button>
+                                    <a href="{{ route('user.predictions.index') }}" class="btn btn-outline-primary w-100">View Predictions</a>
                                 </div>
                             </div>
                         </div>
@@ -445,21 +415,16 @@
 
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item px-0">
-                                    <strong>12 Sep 2025:</strong>
-                                    Temperature fluctuations detected.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    <strong>14 Sep 2025:</strong>
-                                    Battery performance dropped below threshold.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    <strong>18 Sep 2025:</strong>
-                                    Signal interruptions observed.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    <strong>20 Sep 2025:</strong>
-                                    Device shutdown and failure recorded.
-                                </li>
+                                @forelse($chartPredictions->reverse() as $prediction)
+                                    <li class="list-group-item px-0">
+                                        <strong>{{ $prediction->predicted_at?->format('M d, Y H:i') ?? 'Date unavailable' }}:</strong>
+                                        {{ $prediction->machine->name ?? 'Machine' }} —
+                                        {{ $prediction->component ?: 'failure risk' }},
+                                        {{ number_format((float) $prediction->probability * 100, 1) }}% probability.
+                                    </li>
+                                @empty
+                                    <li class="list-group-item px-0">No prediction history is available.</li>
+                                @endforelse
                             </ul>
                         </div>
                     </div>
@@ -475,22 +440,16 @@
 
                         <div class="card-body p-0 mt-3">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item px-0">
-                                    <i class="fa-solid fa-check text-success me-2"></i>
-                                    Replace batteries in Sensor Cluster B immediately.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    <i class="fa-solid fa-check text-success me-2"></i>
-                                    Schedule preventive maintenance in Facility B within 48 hours.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    <i class="fa-solid fa-check text-success me-2"></i>
-                                    Update firmware to the latest release (v2.4.1).
-                                </li>
-                                <li class="list-group-item px-0">
-                                    <i class="fa-solid fa-check text-success me-2"></i>
-                                    Monitor data transmission intervals every 6 hours.
-                                </li>
+                                @forelse($riskPredictions as $prediction)
+                                    <li class="list-group-item px-0">
+                                        <i class="fa-solid fa-check text-success me-2"></i>
+                                        Review {{ $prediction->component ?: 'failure risk' }} for
+                                        {{ $prediction->machine->name ?? 'the machine' }}:
+                                        {{ number_format((float) $prediction->probability * 100, 1) }}% recorded probability.
+                                    </li>
+                                @empty
+                                    <li class="list-group-item px-0">No recommendations are available without recorded predictions.</li>
+                                @endforelse
                             </ul>
                         </div>
                     </div>
@@ -505,25 +464,27 @@
                         </div>
 
                         <div class="card-body p-0 mt-3">
-                            <p>
-                                Machine Learning Model <strong>“FailurePredict-v3”</strong>
-                                identified a <strong>92% probability</strong> of failure based on:
-                            </p>
-
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item px-0">
-                                    <strong>Sensor Drift:</strong> 45% influence
-                                </li>
-                                <li class="list-group-item px-0">
-                                    <strong>Temperature Variation:</strong> 30% influence
-                                </li>
-                                <li class="list-group-item px-0">
-                                    <strong>Battery Health:</strong> 15% influence
-                                </li>
-                                <li class="list-group-item px-0">
-                                    <strong>Firmware Latency:</strong> 10% influence
-                                </li>
-                            </ul>
+                            @if($highestRiskPrediction)
+                                <p>
+                                    Recorded prediction for <strong>{{ $highestRiskPrediction->machine->name ?? 'Machine' }}</strong>
+                                    has a <strong>{{ number_format((float) $highestRiskPrediction->probability * 100, 1) }}% probability</strong>
+                                    @if($highestRiskPrediction->component)
+                                        for {{ $highestRiskPrediction->component }}.
+                                    @endif
+                                    Model: <strong>{{ $highestRiskPrediction->model_version ?: 'not recorded' }}</strong>.
+                                </p>
+                                @if($highestRiskPrediction->explanation)
+                                    <ul class="list-group list-group-flush">
+                                        @foreach($highestRiskPrediction->explanation as $key => $value)
+                                            <li class="list-group-item px-0"><strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong> {{ is_scalar($value) ? $value : json_encode($value) }}</li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p class="text-muted">No explanation details were stored for this prediction.</p>
+                                @endif
+                            @else
+                                <p class="text-muted">No prediction has been recorded.</p>
+                            @endif
                         </div>
                     </div>
 
@@ -547,7 +508,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const predictionOptions = {
             series: [{
                 name: 'Failure Probability',
-                data: [5, 8, 12, 18, 22, 28, 35]
+                data: @json($chartPredictions->map(fn ($prediction) => (float) $prediction->probability * 100)->values())
             }],
             chart: {
                 type: 'area',
@@ -577,11 +538,11 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             colors: ['#dc3545'],
             xaxis: {
-                categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                categories: @json($chartPredictions->map(fn ($prediction) => $prediction->predicted_at?->format('M d') ?? 'Unknown')->values())
             },
             yaxis: {
                 min: 0,
-                max: 40,
+                max: 100,
                 title: {
                     text: 'Failure Risk (%)'
                 },
@@ -608,7 +569,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (gaugeElement && typeof ApexCharts !== 'undefined') {
         const gaugeOptions = {
-            series: [28],
+            series: [{{ $highestRiskPrediction ? (float) $highestRiskPrediction->probability * 100 : 0 }}],
             chart: {
                 height: 250,
                 type: 'radialBar'

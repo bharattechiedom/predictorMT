@@ -63,24 +63,24 @@ $page_title = "Billing";
                     <tbody>
                       <tr>
                         <th>Plan Name</th>
-                        <td>{{ $subscription->plan?->name ?? 'N/A' }}</td>
+                        <td>{{ $subscription?->plan?->name ?? 'N/A' }}</td>
                       </tr>
                       <tr>
                         <th>Started</th>
-                        <td>{{ $subscription->started_at?->format('M d, Y') ?? 'N/A' }}</td>
+                        <td>{{ $subscription?->started_at?->format('M d, Y') ?? 'N/A' }}</td>
                       </tr>
                       <tr>
                         <th>Ended</th>
-                        <td>{{ $subscription->ended_at?->format('M d, Y') ?? 'N/A' }}</td>
+                        <td>{{ $subscription?->ended_at?->format('M d, Y') ?? 'N/A' }}</td>
                       </tr>
                       <tr>
                         <th>Status</th>
-                        <td><span class="badge bg-{{ $subscription && $subscription->status == 'active' ? 'success' : 'secondary' }}">{{ $subscription->status ?? 'inactive' }}</span></td>
+                        <td><span class="badge bg-{{ $subscription?->status === 'active' ? 'success' : 'secondary' }}">{{ ucfirst($subscription?->status ?? 'N/A') }}</span></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <a href="#" class="btn btn-dark mt-3"><i class="bi bi-pencil-square me-1"></i> Manage Subscription</a>
+                <span class="btn btn-dark mt-3 disabled" aria-disabled="true"><i class="bi bi-pencil-square me-1"></i> Manage Subscription</span>
               </div>
             </div>
 
@@ -92,12 +92,12 @@ $page_title = "Billing";
               <div class="card-body">
                 <p>Overview of your resource consumption for this month:</p>
                 <ul class="list-group">
-                  <li class="list-group-item">📦 <strong>Data Processed:</strong> 180 GB / 200 GB</li>
-                  <li class="list-group-item">📊 <strong>Reports Generated:</strong> 85 / 100</li>
-                  <li class="list-group-item">🔗 <strong>API Calls:</strong> 12,340 / 15,000</li>
-                  <li class="list-group-item">📨 <strong>Alerts Sent:</strong> 980 / 1,000</li>
+                  <li class="list-group-item">🏭 <strong>Machines:</strong> {{ $usage['machines'] }}{{ $subscription?->plan?->machines_included ? ' / ' . $subscription->plan->machines_included : '' }}</li>
+                  <li class="list-group-item">📡 <strong>Sensors:</strong> {{ $usage['sensors'] }}</li>
+                  <li class="list-group-item">📊 <strong>Readings this month:</strong> {{ number_format($usage['readings']) }}</li>
+                  <li class="list-group-item">📨 <strong>Alerts this month:</strong> {{ number_format($usage['alerts']) }}</li>
                 </ul>
-                <a href="#" class="btn btn-outline-dark mt-3"><i class="bi bi-graph-up me-1"></i> View Detailed Usage</a>
+                <span class="btn btn-outline-dark mt-3 disabled" aria-disabled="true"><i class="bi bi-graph-up me-1"></i> View Detailed Usage</span>
               </div>
             </div>
 
@@ -128,7 +128,7 @@ $page_title = "Billing";
                         <td><span class="badge bg-{{ $invoice->status == 'paid' ? 'success' : ($invoice->status=='pending'?'warning text-dark':'danger') }}">{{ ucfirst($invoice->status) }}</span></td>
                         <td>
                           <a href="{{ route('user.billing.show', $invoice) }}" class="btn btn-sm btn-outline-primary me-1">View</a>
-                          <a href="#" class="btn btn-sm btn-outline-secondary">PDF</a>
+                          <span class="btn btn-sm btn-outline-secondary disabled" aria-disabled="true">PDF unavailable</span>
                         </td>
                       </tr>
                       @empty
@@ -146,14 +146,7 @@ $page_title = "Billing";
                 <h5 class="mb-0"><i class="bi bi-credit-card-2-front me-2"></i>Payment Methods</h5>
               </div>
               <div class="card-body">
-                <p>Manage your saved payment options:</p>
-                <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-credit-card me-2"></i>Visa •••• 5423</span>
-                    <span class="badge bg-success">Primary</span>
-                  </li>
-                </ul>
-                <a href="#" class="btn btn-dark mt-3"><i class="bi bi-plus-circle me-1"></i> Add New Payment Method</a>
+                <p class="mb-0">No saved payment method is available in this account.</p>
               </div>
             </div>
 
