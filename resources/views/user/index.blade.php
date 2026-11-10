@@ -38,7 +38,7 @@
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-1 position-absolute end-0 top-10 mt-4 opacity-50"
                                         style="color: #0D6EFD;">
                                         <i class="fas fa-industry fa-lg"></i>
                                     </div>
@@ -58,7 +58,7 @@
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-1 position-absolute end-0 top-10 mt-4 opacity-50"
                                         style="color: #198754;">
                                         <i class="fas fa-play fa-lg"></i>
                                     </div>
@@ -78,7 +78,7 @@
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-1 position-absolute end-0 top-10 mt-4 opacity-50"
                                         style="color: #FD7E14;">
                                         <i class="fas fa-bug fa-lg"></i>
                                     </div>
@@ -101,7 +101,7 @@
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-1 position-absolute end-0 top-10 mt-4 opacity-50"
                                         style="color: #6F42C1;">
                                         <i class="fas fa-microchip fa-lg"></i>
                                     </div>
@@ -121,7 +121,7 @@
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-1 position-absolute end-0 top-10 mt-4 opacity-50"
                                         style="color: #20C997;">
                                         <i class="fas fa-satellite-dish fa-lg"></i>
                                     </div>
@@ -141,7 +141,7 @@
                                         </small>
                                     </div>
 
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-2 position-absolute end-0 top-10 mt-4"
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center kpiCard fs-1 position-absolute end-0 top-10 mt-4 opacity-50"
                                         style="color: #DC3545;">
                                         <i class="fas fa-heart-pulse fa-lg"></i>
                                     </div>
