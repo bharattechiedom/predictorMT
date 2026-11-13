@@ -105,13 +105,14 @@
                                     {{-- Machine --}}
                                     <div class="col-md-6">
                                         <label for="machine_id" class="form-label fw-semibold">
-                                            Machine
+                                            Machine <span class="text-danger">*</span>
                                         </label>
 
                                         <select name="machine_id"
                                                 id="machine_id"
-                                                class="form-select">
-                                            <option value="">(Optional) Select Machine</option>
+                                                class="form-select"
+                                                required>
+                                            <option value="">Select Machine</option>
 
                                             @foreach ($machines as $machine)
                                                 <option value="{{ $machine->id }}"

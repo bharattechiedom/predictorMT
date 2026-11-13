@@ -1,0 +1,271 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 4538 >>
+stream
+0.040 0.360 0.560 rg 0.00 835.00 595.00 7.00 re f
+BT /F2 8 Tf 0.370 0.430 0.500 rg 1 0 0 1 42.00 812.00 Tm (PREDICTORMT  /  CLIENT TEST GUIDE) Tj ET
+BT /F1 8 Tf 0.370 0.430 0.500 rg 1 0 0 1 420.00 812.00 Tm (OVERVIEW) Tj ET
+0.820 0.860 0.900 RG 0.8 w 42.00 799.00 m 553.00 799.00 l S
+0.820 0.860 0.900 RG 0.8 w 42.00 42.00 m 553.00 42.00 l S
+BT /F1 8 Tf 0.420 0.470 0.540 rg 1 0 0 1 42.00 22.00 Tm (Sensor management and simulation) Tj ET
+BT /F1 8 Tf 0.420 0.470 0.540 rg 1 0 0 1 535.00 22.00 Tm (1) Tj ET
+BT /F2 10 Tf 0.040 0.420 0.650 rg 1 0 0 1 42.00 750.00 Tm (CLIENT WALKTHROUGH) Tj ET
+BT /F2 31 Tf 0.080 0.190 0.320 rg 1 0 0 1 42.00 703.00 Tm (Sensors & Simulation) Tj ET
+BT /F1 13 Tf 0.320 0.380 0.450 rg 1 0 0 1 42.00 676.00 Tm (A practical, step-by-step guide for testing sensor management and) Tj ET
+BT /F1 13 Tf 0.320 0.380 0.450 rg 1 0 0 1 42.00 657.00 Tm (simulated machine readings in the PredictorMT user dashboard.) Tj ET
+0.930 0.960 0.980 rg 42.00 511.00 511.00 107.00 re f
+BT /F2 9 Tf 0.040 0.420 0.650 rg 1 0 0 1 60.00 591.00 Tm (TEST FLOW) Tj ET
+1.000 1.000 1.000 rg 60.00 526.00 88.00 52.00 re 0.860 0.890 0.920 RG 0.8 w B
+BT /F2 9 Tf 0.080 0.190 0.320 rg 1 0 0 1 68.00 562.00 Tm (1  Prepare) Tj ET
+BT /F1 7 Tf 0.370 0.430 0.500 rg 1 0 0 1 68.00 544.00 Tm (Company machine) Tj ET
+1.000 1.000 1.000 rg 156.00 526.00 88.00 52.00 re 0.860 0.890 0.920 RG 0.8 w B
+BT /F2 9 Tf 0.080 0.190 0.320 rg 1 0 0 1 164.00 562.00 Tm (2  Register) Tj ET
+BT /F1 7 Tf 0.370 0.430 0.500 rg 1 0 0 1 164.00 544.00 Tm (Assign a sensor) Tj ET
+1.000 1.000 1.000 rg 252.00 526.00 88.00 52.00 re 0.860 0.890 0.920 RG 0.8 w B
+BT /F2 9 Tf 0.080 0.190 0.320 rg 1 0 0 1 260.00 562.00 Tm (3  Simulate) Tj ET
+BT /F1 7 Tf 0.370 0.430 0.500 rg 1 0 0 1 260.00 544.00 Tm (Generate readings) Tj ET
+1.000 1.000 1.000 rg 348.00 526.00 88.00 52.00 re 0.860 0.890 0.920 RG 0.8 w B
+BT /F2 9 Tf 0.080 0.190 0.320 rg 1 0 0 1 356.00 562.00 Tm (4  Review) Tj ET
+BT /F1 7 Tf 0.370 0.430 0.500 rg 1 0 0 1 356.00 544.00 Tm (Charts and alerts) Tj ET
+1.000 1.000 1.000 rg 444.00 526.00 88.00 52.00 re 0.860 0.890 0.920 RG 0.8 w B
+BT /F2 9 Tf 0.080 0.190 0.320 rg 1 0 0 1 452.00 562.00 Tm (5  Finish) Tj ET
+BT /F1 7 Tf 0.370 0.430 0.500 rg 1 0 0 1 452.00 544.00 Tm (Stop the run) Tj ET
+BT /F2 15 Tf 0.080 0.190 0.320 rg 1 0 0 1 42.00 468.00 Tm (Before you begin) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 446.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 446.00 Tm (Sign in with a user account that belongs to the company you are testing.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 428.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 428.00 Tm (Have at least one machine registered under that company. Create one first if needed.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 410.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 410.00 Tm (For automatic readings, the server scheduler must be running. New readings are generated on) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 396.00 Tm (its schedule \(once per minute\).) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 378.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 378.00 Tm (Use a simulation scenario to test generated data. Simulation does not connect to or verify) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 364.00 Tm (real sensor hardware.) Tj ET
+1.000 0.970 0.900 rg 42.00 258.00 511.00 92.00 re 0.950 0.840 0.570 RG 0.8 w B
+BT /F2 10 Tf 0.480 0.320 0.050 rg 1 0 0 1 58.00 325.00 Tm (IMPORTANT: simulation versus a real device) Tj ET
+BT /F1 9 Tf 0.340 0.300 0.220 rg 1 0 0 1 58.00 307.00 Tm (Simulation creates sample readings inside the application and may create test alerts or maintenance) Tj ET
+BT /F1 9 Tf 0.340 0.300 0.220 rg 1 0 0 1 58.00 294.00 Tm (tasks. It does not prove that a physical sensor is installed, connected, calibrated, or transmitting.) Tj ET
+BT /F2 14 Tf 0.080 0.190 0.320 rg 1 0 0 1 42.00 211.00 Tm (In this guide) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 187.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 187.00 Tm (Page 2: add and verify a sensor.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 165.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 165.00 Tm (Page 3: run a simulation and review its readings.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 143.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 143.00 Tm (Page 4: test checklist and common troubleshooting.) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 4508 >>
+stream
+0.040 0.360 0.560 rg 0.00 835.00 595.00 7.00 re f
+BT /F2 8 Tf 0.370 0.430 0.500 rg 1 0 0 1 42.00 812.00 Tm (PREDICTORMT  /  CLIENT TEST GUIDE) Tj ET
+BT /F1 8 Tf 0.370 0.430 0.500 rg 1 0 0 1 420.00 812.00 Tm (SENSOR SETUP) Tj ET
+0.820 0.860 0.900 RG 0.8 w 42.00 799.00 m 553.00 799.00 l S
+0.820 0.860 0.900 RG 0.8 w 42.00 42.00 m 553.00 42.00 l S
+BT /F1 8 Tf 0.420 0.470 0.540 rg 1 0 0 1 42.00 22.00 Tm (Sensor management and simulation) Tj ET
+BT /F1 8 Tf 0.420 0.470 0.540 rg 1 0 0 1 535.00 22.00 Tm (2) Tj ET
+BT /F2 21 Tf 0.080 0.190 0.320 rg 1 0 0 1 42.00 753.00 Tm (1. Register a sensor) Tj ET
+BT /F1 11 Tf 0.230 0.290 0.370 rg 1 0 0 1 42.00 730.00 Tm (A sensor record identifies a device and links it to a machine in your company. The) Tj ET
+BT /F1 11 Tf 0.230 0.290 0.370 rg 1 0 0 1 42.00 715.00 Tm (machine assignment is required.) Tj ET
+0.960 0.975 0.990 rg 42.00 608.00 245.00 84.00 re 0.860 0.890 0.920 RG 0.8 w B
+0.040 0.360 0.560 rg 54.00 654.00 25.00 25.00 re f
+BT /F2 11 Tf 1.000 1.000 1.000 rg 1 0 0 1 62.00 663.00 Tm (1) Tj ET
+BT /F2 11 Tf 0.080 0.190 0.320 rg 1 0 0 1 90.00 667.00 Tm (Open Sensor Management) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 649.00 Tm (In the dashboard sidebar, choose Sensor) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 637.00 Tm (Management, then select the create/add) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 625.00 Tm (sensor action.) Tj ET
+0.960 0.975 0.990 rg 42.00 512.00 245.00 84.00 re 0.860 0.890 0.920 RG 0.8 w B
+0.040 0.360 0.560 rg 54.00 558.00 25.00 25.00 re f
+BT /F2 11 Tf 1.000 1.000 1.000 rg 1 0 0 1 62.00 567.00 Tm (2) Tj ET
+BT /F2 11 Tf 0.080 0.190 0.320 rg 1 0 0 1 90.00 571.00 Tm (Enter the device details) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 553.00 Tm (Provide a unique Device ID and a Sensor) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 541.00 Tm (Type \(for example, temperature or) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 529.00 Tm (multi-parameter\).) Tj ET
+0.960 0.975 0.990 rg 42.00 416.00 245.00 84.00 re 0.860 0.890 0.920 RG 0.8 w B
+0.040 0.360 0.560 rg 54.00 462.00 25.00 25.00 re f
+BT /F2 11 Tf 1.000 1.000 1.000 rg 1 0 0 1 62.00 471.00 Tm (3) Tj ET
+BT /F2 11 Tf 0.080 0.190 0.320 rg 1 0 0 1 90.00 475.00 Tm (Assign the company machine) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 457.00 Tm (Choose the correct machine from the) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 445.00 Tm (Machine list. Only machines in your) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 433.00 Tm (company should be available.) Tj ET
+0.960 0.975 0.990 rg 42.00 320.00 245.00 84.00 re 0.860 0.890 0.920 RG 0.8 w B
+0.040 0.360 0.560 rg 54.00 366.00 25.00 25.00 re f
+BT /F2 11 Tf 1.000 1.000 1.000 rg 1 0 0 1 62.00 375.00 Tm (4) Tj ET
+BT /F2 11 Tf 0.080 0.190 0.320 rg 1 0 0 1 90.00 379.00 Tm (Complete optional fields and save) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 361.00 Tm (Firmware version, battery level, and) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 349.00 Tm (last-seen time are optional. Choose a) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 337.00 Tm (status, then select Create Sensor.) Tj ET
+BT /F2 14 Tf 0.080 0.190 0.320 rg 1 0 0 1 42.00 273.00 Tm (Confirm the sensor was saved) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 248.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 248.00 Tm (The sensor appears in the sensor list with the expected device ID, type, machine, and) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 234.00 Tm (status.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 216.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 216.00 Tm (Open its details, then edit and save a harmless field change to verify update access.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 198.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 198.00 Tm (A sensor record alone does not produce readings. Readings arrive from a real ingestion) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 184.00 Tm (connection or from simulation.) Tj ET
+0.930 0.960 0.980 rg 42.00 85.00 511.00 67.00 re f
+BT /F2 10 Tf 0.040 0.420 0.650 rg 1 0 0 1 58.00 128.00 Tm (Expected result) Tj ET
+BT /F1 9 Tf 0.230 0.290 0.370 rg 1 0 0 1 58.00 110.00 Tm (The sensor is visible to your company and assigned to the selected machine. Another company must not) Tj ET
+BT /F1 9 Tf 0.230 0.290 0.370 rg 1 0 0 1 58.00 95.00 Tm (be able to view or change it.) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 4881 >>
+stream
+0.040 0.360 0.560 rg 0.00 835.00 595.00 7.00 re f
+BT /F2 8 Tf 0.370 0.430 0.500 rg 1 0 0 1 42.00 812.00 Tm (PREDICTORMT  /  CLIENT TEST GUIDE) Tj ET
+BT /F1 8 Tf 0.370 0.430 0.500 rg 1 0 0 1 420.00 812.00 Tm (SIMULATION) Tj ET
+0.820 0.860 0.900 RG 0.8 w 42.00 799.00 m 553.00 799.00 l S
+0.820 0.860 0.900 RG 0.8 w 42.00 42.00 m 553.00 42.00 l S
+BT /F1 8 Tf 0.420 0.470 0.540 rg 1 0 0 1 42.00 22.00 Tm (Sensor management and simulation) Tj ET
+BT /F1 8 Tf 0.420 0.470 0.540 rg 1 0 0 1 535.00 22.00 Tm (3) Tj ET
+BT /F2 21 Tf 0.080 0.190 0.320 rg 1 0 0 1 42.00 753.00 Tm (2. Run a machine simulation) Tj ET
+BT /F1 11 Tf 0.230 0.290 0.370 rg 1 0 0 1 42.00 730.00 Tm (Simulation generates sample sensor readings for a selected company machine. It is the) Tj ET
+BT /F1 11 Tf 0.230 0.290 0.370 rg 1 0 0 1 42.00 715.00 Tm (recommended way to test dashboard charts and alerts without a physical device.) Tj ET
+0.960 0.975 0.990 rg 42.00 608.00 245.00 84.00 re 0.860 0.890 0.920 RG 0.8 w B
+0.040 0.360 0.560 rg 54.00 654.00 25.00 25.00 re f
+BT /F2 11 Tf 1.000 1.000 1.000 rg 1 0 0 1 62.00 663.00 Tm (1) Tj ET
+BT /F2 11 Tf 0.080 0.190 0.320 rg 1 0 0 1 90.00 667.00 Tm (Open Simulation and choose a machine) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 649.00 Tm (Use the dashboard sidebar. Select the) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 637.00 Tm (company machine you want to test.) Tj ET
+0.960 0.975 0.990 rg 42.00 512.00 245.00 84.00 re 0.860 0.890 0.920 RG 0.8 w B
+0.040 0.360 0.560 rg 54.00 558.00 25.00 25.00 re f
+BT /F2 11 Tf 1.000 1.000 1.000 rg 1 0 0 1 62.00 567.00 Tm (2) Tj ET
+BT /F2 11 Tf 0.080 0.190 0.320 rg 1 0 0 1 90.00 571.00 Tm (Choose a scenario and speed) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 553.00 Tm (Start with Normal operation for a) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 541.00 Tm (baseline. A fault scenario can be used) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 529.00 Tm (to check fault handling.) Tj ET
+0.960 0.975 0.990 rg 42.00 416.00 245.00 84.00 re 0.860 0.890 0.920 RG 0.8 w B
+0.040 0.360 0.560 rg 54.00 462.00 25.00 25.00 re f
+BT /F2 11 Tf 1.000 1.000 1.000 rg 1 0 0 1 62.00 471.00 Tm (3) Tj ET
+BT /F2 11 Tf 0.080 0.190 0.320 rg 1 0 0 1 90.00 475.00 Tm (Review thresholds and start) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 457.00 Tm (Keep the default thresholds for a basic) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 445.00 Tm (test, then select Start. Optional) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 433.00 Tm (calibration adjusts simulated) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 421.00 Tm (temperature.) Tj ET
+0.960 0.975 0.990 rg 42.00 320.00 245.00 84.00 re 0.860 0.890 0.920 RG 0.8 w B
+0.040 0.360 0.560 rg 54.00 366.00 25.00 25.00 re f
+BT /F2 11 Tf 1.000 1.000 1.000 rg 1 0 0 1 62.00 375.00 Tm (4) Tj ET
+BT /F2 11 Tf 0.080 0.190 0.320 rg 1 0 0 1 90.00 379.00 Tm (Wait for and review readings) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 361.00 Tm (Readings are generated by the server) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 349.00 Tm (scheduler \(once per minute\). Check the) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 337.00 Tm (charts, latest readings, and simulation) Tj ET
+BT /F1 9 Tf 0.300 0.360 0.430 rg 1 0 0 1 90.00 325.00 Tm (status.) Tj ET
+0.930 0.960 0.980 rg 42.00 191.00 511.00 107.00 re f
+BT /F2 11 Tf 0.080 0.190 0.320 rg 1 0 0 1 58.00 274.00 Tm (What the controls do) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 60.00 252.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 74.00 252.00 Tm (Pause stops new readings while preserving the run; Start can resume when the machine is) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 74.00 238.00 Tm (ready.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 60.00 220.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 74.00 220.00 Tm (Stop ends the run. Historical playback loads saved readings for a selected time range.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 60.00 202.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 74.00 202.00 Tm (The speed setting affects generated simulation values; it does not make the scheduler) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 74.00 188.00 Tm (run more often.) Tj ET
+1.000 0.970 0.900 rg 42.00 79.00 511.00 91.00 re 0.950 0.840 0.570 RG 0.8 w B
+BT /F2 10 Tf 0.480 0.320 0.050 rg 1 0 0 1 58.00 147.00 Tm (Fault-scenario test note) Tj ET
+BT /F1 9 Tf 0.340 0.300 0.220 rg 1 0 0 1 58.00 129.00 Tm (Starting most fault scenarios records a scenario alert and a maintenance task. Readings that cross) Tj ET
+BT /F1 9 Tf 0.340 0.300 0.220 rg 1 0 0 1 58.00 116.00 Tm (configured thresholds can also create alerts. Use a test machine and review/clean up test records) Tj ET
+BT /F1 9 Tf 0.340 0.300 0.220 rg 1 0 0 1 58.00 103.00 Tm (according to your process.) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 12 0 R >>
+endobj
+12 0 obj
+<< /Length 4748 >>
+stream
+0.040 0.360 0.560 rg 0.00 835.00 595.00 7.00 re f
+BT /F2 8 Tf 0.370 0.430 0.500 rg 1 0 0 1 42.00 812.00 Tm (PREDICTORMT  /  CLIENT TEST GUIDE) Tj ET
+BT /F1 8 Tf 0.370 0.430 0.500 rg 1 0 0 1 420.00 812.00 Tm (TEST CHECKLIST) Tj ET
+0.820 0.860 0.900 RG 0.8 w 42.00 799.00 m 553.00 799.00 l S
+0.820 0.860 0.900 RG 0.8 w 42.00 42.00 m 553.00 42.00 l S
+BT /F1 8 Tf 0.420 0.470 0.540 rg 1 0 0 1 42.00 22.00 Tm (Sensor management and simulation) Tj ET
+BT /F1 8 Tf 0.420 0.470 0.540 rg 1 0 0 1 535.00 22.00 Tm (4) Tj ET
+BT /F2 21 Tf 0.080 0.190 0.320 rg 1 0 0 1 42.00 753.00 Tm (3. Test checklist & results) Tj ET
+BT /F1 11 Tf 0.230 0.290 0.370 rg 1 0 0 1 42.00 730.00 Tm (Run these checks in order and record the outcome. Use a company test machine and avoid) Tj ET
+BT /F1 11 Tf 0.230 0.290 0.370 rg 1 0 0 1 42.00 715.00 Tm (deleting production records.) Tj ET
+0.970 0.980 0.990 rg 42.00 625.00 511.00 68.00 re 0.880 0.900 0.930 RG 0.8 w B
+BT /F2 10 Tf 0.080 0.190 0.320 rg 1 0 0 1 54.00 673.00 Tm (1. Machine prerequisite) Tj ET
+BT /F1 8 Tf 0.300 0.360 0.430 rg 1 0 0 1 54.00 656.00 Tm (A machine belonging to the test company is listed in Simulation.) Tj ET
+BT /F2 7 Tf 0.040 0.420 0.650 rg 1 0 0 1 443.00 674.00 Tm (PASS / FAIL) Tj ET
+0.970 0.980 0.990 rg 42.00 550.00 511.00 68.00 re 0.880 0.900 0.930 RG 0.8 w B
+BT /F2 10 Tf 0.080 0.190 0.320 rg 1 0 0 1 54.00 598.00 Tm (2. Sensor creation) Tj ET
+BT /F1 8 Tf 0.300 0.360 0.430 rg 1 0 0 1 54.00 581.00 Tm (A sensor saves with a unique ID, type, required machine, and selected status.) Tj ET
+BT /F2 7 Tf 0.040 0.420 0.650 rg 1 0 0 1 443.00 599.00 Tm (PASS / FAIL) Tj ET
+0.970 0.980 0.990 rg 42.00 475.00 511.00 68.00 re 0.880 0.900 0.930 RG 0.8 w B
+BT /F2 10 Tf 0.080 0.190 0.320 rg 1 0 0 1 54.00 523.00 Tm (3. Company access) Tj ET
+BT /F1 8 Tf 0.300 0.360 0.430 rg 1 0 0 1 54.00 506.00 Tm (The company user can view and update its sensor; a different company cannot.) Tj ET
+BT /F2 7 Tf 0.040 0.420 0.650 rg 1 0 0 1 443.00 524.00 Tm (PASS / FAIL) Tj ET
+0.970 0.980 0.990 rg 42.00 400.00 511.00 68.00 re 0.880 0.900 0.930 RG 0.8 w B
+BT /F2 10 Tf 0.080 0.190 0.320 rg 1 0 0 1 54.00 448.00 Tm (4. Normal simulation) Tj ET
+BT /F1 8 Tf 0.300 0.360 0.430 rg 1 0 0 1 54.00 431.00 Tm (Start Normal operation; status changes and readings appear after a scheduler tick.) Tj ET
+BT /F2 7 Tf 0.040 0.420 0.650 rg 1 0 0 1 443.00 449.00 Tm (PASS / FAIL) Tj ET
+0.970 0.980 0.990 rg 42.00 325.00 511.00 68.00 re 0.880 0.900 0.930 RG 0.8 w B
+BT /F2 10 Tf 0.080 0.190 0.320 rg 1 0 0 1 54.00 373.00 Tm (5. Charts and history) Tj ET
+BT /F1 8 Tf 0.300 0.360 0.430 rg 1 0 0 1 54.00 356.00 Tm (Charts/table update; historical playback can load saved readings for a date range.) Tj ET
+BT /F2 7 Tf 0.040 0.420 0.650 rg 1 0 0 1 443.00 374.00 Tm (PASS / FAIL) Tj ET
+0.970 0.980 0.990 rg 42.00 250.00 511.00 68.00 re 0.880 0.900 0.930 RG 0.8 w B
+BT /F2 10 Tf 0.080 0.190 0.320 rg 1 0 0 1 54.00 298.00 Tm (6. Pause and stop) Tj ET
+BT /F1 8 Tf 0.300 0.360 0.430 rg 1 0 0 1 54.00 281.00 Tm (Pause prevents new readings; Stop ends the run.) Tj ET
+BT /F2 7 Tf 0.040 0.420 0.650 rg 1 0 0 1 443.00 299.00 Tm (PASS / FAIL) Tj ET
+0.970 0.980 0.990 rg 42.00 175.00 511.00 68.00 re 0.880 0.900 0.930 RG 0.8 w B
+BT /F2 10 Tf 0.080 0.190 0.320 rg 1 0 0 1 54.00 223.00 Tm (7. Fault scenario \(optional\)) Tj ET
+BT /F1 8 Tf 0.300 0.360 0.430 rg 1 0 0 1 54.00 206.00 Tm (A test fault scenario produces the expected simulation data and scenario event.) Tj ET
+BT /F2 7 Tf 0.040 0.420 0.650 rg 1 0 0 1 443.00 224.00 Tm (PASS / FAIL) Tj ET
+BT /F2 13 Tf 0.080 0.190 0.320 rg 1 0 0 1 42.00 139.00 Tm (Troubleshooting) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 117.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 117.00 Tm (No readings: verify the scheduler is enabled and running; allow up to a minute for the next) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 103.00 Tm (scheduled tick.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 85.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 85.00 Tm (Machine missing: confirm it belongs to the signed-in user company.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 67.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 67.00 Tm (Start rejected: check that machine state is Ready and correct maintenance, fault, or) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 53.00 Tm (emergency-stop state first.) Tj ET
+BT /F2 10 Tf 0.080 0.420 0.650 rg 1 0 0 1 48.00 35.00 Tm (-) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 35.00 Tm (No threshold alert: confirm values actually crossed the configured threshold; normal sample) Tj ET
+BT /F1 10 Tf 0.230 0.290 0.370 rg 1 0 0 1 62.00 21.00 Tm (data may not cross it.) Tj ET
+endstream
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000210 00000 n 
+0000000285 00000 n 
+0000000421 00000 n 
+0000005010 00000 n 
+0000005146 00000 n 
+0000009705 00000 n 
+0000009842 00000 n 
+0000014775 00000 n 
+0000014913 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R >>
+startxref
+19713
+%%EOF
