@@ -159,10 +159,10 @@
 
                                 <div class="card-header d-flex justify-content-between align-items-center">
 
-                                    <h5 class="mb-0 text-white">
+                                    <h4 class="mb-0">
                                         <i class="fas fa-chart-area me-2"></i>
                                         Real-Time Sensor Analytics
-                                    </h5>
+                                    </h4>
 
                                     <span class="badge bg-success">
                                         Live
@@ -189,10 +189,10 @@
 
                             <div class="card shadow-sm border-0">
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0 fw-bold text-white">
+                                    <h4 class="mb-0 fw-bold">
                                         <i class="fas fa-chart-line text-primary me-2"></i>
                                         Live Sensor Charts
-                                    </h5>
+                                    </h4>
 
                                     <span class="badge bg-success">
                                         <i class="fas fa-circle me-1"></i> Live
@@ -300,10 +300,10 @@
                         <div class="card shadow-sm border-0 mb-4">
 
                             <div class="card-header">
-                                <h5 class="mb-0 fw-bold text-white">
+                                <h4 class="mb-0 fw-bold">
                                     <i class="fas fa-heart-pulse text-danger me-2"></i>
                                     Machine Health
-                                </h5>
+                                </h4>
                             </div>
 
                             <div class="card-body text-center bg-white">
@@ -334,7 +334,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
 
                                         <div>
-                                            <small class="text-white">
+                                            <small class="text-dark">
                                                 Overall Score
                                             </small>
 
@@ -396,7 +396,7 @@
 
                                         <div>
 
-                                            <small class="text-white">
+                                            <small class="text-dark">
                                                 Fault Count
                                             </small>
 
@@ -427,10 +427,10 @@
                             <div class="card shadow-sm border-0">
 
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0 text-white">
+                                    <h4 class="mb-0">
                                         <i class="fas fa-list-ul me-2"></i>
                                         Event Log
-                                    </h5>
+                                    </h4>
 
                                     <span class="badge bg-success">
                                         Live Events
@@ -490,10 +490,10 @@
                             <div class="card shadow-sm border-0">
 
                                 <div class="card-header">
-                                    <h5 class="mb-0 text-white">
+                                    <h4 class="mb-0">
                                         <i class="fas fa-microchip me-2"></i>
                                         Machine Details
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body bg-white">
@@ -553,10 +553,10 @@
                             <div class="card shadow-sm border-0">
 
                                 <div class="card-header">
-                                    <h5 class="mb-0 text-white">
+                                    <h4 class="mb-0">
                                         <i class="fas fa-chart-column me-2"></i>
                                         Performance Summary
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body bg-white">
@@ -628,10 +628,10 @@
                             <div class="card shadow-sm border-0">
 
                                 <div class="card-header">
-                                    <h5 class="mb-0 text-white">
+                                    <h4 class="mb-0">
                                         <i class="fas fa-satellite-dish me-2"></i>
                                         MQTT Connection
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body bg-white">
@@ -675,10 +675,10 @@
                             <div class="card shadow-sm border-0">
 
                                 <div class="card-header">
-                                    <h5 class="mb-0 text-white">
+                                    <h4 class="mb-0">
                                         <i class="fas fa-chart-pie me-2"></i>
                                         System Analytics
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body bg-white">
@@ -740,10 +740,10 @@
                             <div class="card shadow-sm border-0">
 
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0 text-white">
+                                    <h4 class="mb-0">
                                         <i class="fas fa-industry me-2"></i>
                                         Machine Status
-                                    </h5>
+                                    </h4>
 
                                     <span class="badge bg-success">
                                         {{ $machines->count() }} Machines
@@ -789,10 +789,10 @@
                             <div class="card shadow-sm border-0">
 
                                 <div class="card-header">
-                                    <h5 class="mb-0 text-white">
+                                    <h4 class="mb-0">
                                         <i class="fas fa-bell me-2"></i>
                                         Recent Alerts
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="list-group list-group-flush">
@@ -826,10 +826,10 @@
                             <div class="card shadow-sm border-0">
 
                                 <div class="card-header">
-                                    <h5 class="mb-0 text-white">
+                                    <h4 class="mb-0">
                                         <i class="fas fa-clock-rotate-left me-2"></i>
                                         Fault Timeline
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="card-body bg-white">
@@ -878,16 +878,16 @@
                             <div class="card shadow-sm border-0">
 
                                 <div class="card-header">
-                                    <h5 class="mb-0 text-white">
+                                    <h4 class="mb-0">
                                         <i class="fas fa-screwdriver-wrench me-2"></i>
                                         Maintenance Schedule
-                                    </h5>
+                                    </h4>
                                 </div>
 
                                 <div class="list-group list-group-flush">
 
                                     @forelse($upcomingMaintenance as $task)
-                                        <div class="list-group-item d-flex justify-content-between">
+                                        <div class="list-group-item d-flex justify-content-between align-items-center">
                                             <span>{{ $task->machine->name ?? 'Machine' }}</span>
                                             <span class="badge bg-{{ $task->status === 'in_progress' ? 'warning text-dark' : 'primary' }}">{{ $task->scheduled_at?->format('M d') ?? ucfirst(str_replace('_', ' ', $task->status)) }}</span>
                                         </div>
@@ -1026,7 +1026,7 @@
 
                                 <div class="card-body">
 
-                                    <h5 class="card-title text-white">Subscriptions</h5>
+                                    <h5 class="card-title">Subscriptions</h5>
 
                                     @if(!empty($subscriptions) && $subscriptions->count())
 
