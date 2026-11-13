@@ -36,12 +36,12 @@
     </a>
 
             {{-- Sidebar Toggle --}}
-            <button type="button"
+            <!-- <button type="button"
                     class="btn border-0"
                     id="userSidebarToggle"
                     aria-label="Toggle sidebar">
                 <i class="fa-solid fa-bars"></i>
-            </button>
+            </button> -->
 
             <div class="d-flex align-items-center gap-3 ms-auto">
 
@@ -110,7 +110,7 @@
                 {{-- User Menu --}}
                 <div class="dropdown">
                     <button type="button"
-                            class="btn dropdown-toggle"
+                            class="btn dropdown-toggle text-capitalize"
                             data-bs-toggle="dropdown"
                             aria-expanded="false">
                         <i class="fa-regular fa-user me-1"></i>

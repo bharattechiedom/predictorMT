@@ -11,7 +11,7 @@
                 <div class="page-content dashboard-page m-auto p-3 mt-5">
                     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
                         <div>
-                            <h3 class="mb-1">Machinery simulation</h3>
+                            <h3 class="mb-1 fw-bold">Machinery Simulation</h3>
                             <p class="text-muted mb-0">Running simulations generate readings in the background once per minute.</p>
                         </div>
                         <div class="d-flex gap-2 badge_padding">

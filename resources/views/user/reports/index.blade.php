@@ -12,11 +12,22 @@ $page_title = "Reports";
             <div class="col-md-10">
               <div class="page-content m-auto mt-5">
 
+			  
+
 					<div class="page-container">
+
+					<div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                        <div>
+                            <h3 class="fw-bold mb-1">Reports</h3>
+                            
+                        </div>
+
+                       
+                    </div>
+
+
 						<div class="card shadow-none">
-							<div class="card-header d-flex justify-content-between align-items-center px-0">
-								<h3 class="mb-0">Reports</h3>
-							</div>
+								
 							<!-- <div class="card-body">
 								<div class="row g-3">
 									<div class="col-md-3">
