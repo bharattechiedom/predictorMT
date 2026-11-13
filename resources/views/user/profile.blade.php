@@ -142,7 +142,7 @@
                                             </button>
                                         </li>
 
-                                        <li class="nav-item" role="presentation">
+                                        <!-- <li class="nav-item" role="presentation">
                                             <button class="nav-link"
                                                     id="company-tab"
                                                     data-bs-toggle="tab"
@@ -168,7 +168,7 @@
                                                 <i class="fa-solid fa-sliders me-1"></i>
                                                 Settings
                                             </button>
-                                        </li>
+                                        </li> -->
 
                                     </ul>
                                 </div>
